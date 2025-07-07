@@ -1,199 +1,74 @@
-# Astro Starlight On GitHub Pages
+# Guia para Adicionar Conteúdo - Starlight (Astro)
 
-> Objectives
+Este README fornece instruções sobre como adicionar novo conteúdo a este repositório, que utiliza o framework Starlight para Astro. A pasta principal para o conteúdo do site é a `website/`.
 
-Build and deploy an Astro Starlight Documentation site to GitHub Pages.
-Explore features and customization - validate its use as reusable template.
+## Estrutura de Pastas Principal
 
----
+O conteúdo do site que será publicado no GitHub Pages está localizado dentro da pasta `website/`. A estrutura relevante dentro de `website/` é:
 
-## 1. Why Astro?
+```
+website/
+├── public/             # Ativos estáticos (favicons, etc.)
+├── src/
+│   ├── assets/         # Imagens
+│   ├── content/
+│   │   ├── docs/       # Arquivos Markdown para as páginas de documentação
+│   │   └── config.ts   # Configuração do Starlight
+└── astro.config.mjs    # Configuração do Astro
+```
 
-Astro is a free, open-source option for static site generation that bills itself as _the all-in-one web framework designed for speed_. Three features that make it interesting:
- - Islands architecture - with **zero client-side JS**
- - Plays well with others - **bring your own components**
- - Rich ecosystem - **content focused & community-driven**
+## Adicionando Novas Páginas de Conteúdo
 
-This gives you the benefits of performance & flexibility, with rich themes and integrations for quickstart adoption. It's a rising star for JS frameworks and used by industry teams - stability ftw.
+Para adicionar novas páginas à documentação:
 
----
+1.  Navegue até a pasta `website/src/content/docs/`.
+2.  Crie um novo arquivo com a extensão `.md` (Markdown) ou `.mdx` (MDX, Markdown com componentes JSX).
+3.  O nome do arquivo determinará a rota da página. Por exemplo, `nova-pagina.md` será acessível em `front-end-docs-1/nova-pagina`.
+4.  Você pode organizar o conteúdo em subpastas dentro de `website/src/content/docs/` para criar seções aninhadas. Por exemplo, `website/src/content/docs/guia/parte-1.md` será acessível em `front-end-docs-1/guia/parte-1`.
 
-## 2. Why Starlight?
+## Adicionando Imagens
 
-Astro has a [large collection of themes](https://astro.build/themes) supporting different site categories and frontend technology components. The ["Official" filter](https://astro.build/themes?search=&categories%5B%5D=official) identifies themes created by the Astro team. [Starlight](https://astro.build/themes/details/starlight/) is the default **documentation focused** framework from Astro, currently in very early release. It promises:
- - fast, accessible, easy-to-use websites
- - site-navigation, search, i18n, SEO support
- - code highlighting, dark mode, easy-to-read typography
- - write in Markdown, MDX or Markdoc
+Para adicionar imagens que serão usadas nas suas páginas de documentação:
 
-Plus all Astro benefits (e.g., bring your own UI components).
+1.  Coloque os arquivos de imagem na pasta `website/src/public/`.
+2.  No seu arquivo Markdown, você pode referenciar a imagem usando um caminho relativo a partir da pasta `src/public/`.
 
- - [See the GitHub Repo](https://github.com/withastro/starlight)
- - [Read the Docs](https://starlight.astro.build/)
- - [Get Started](https://starlight.astro.build/getting-started/)
+    Exemplo em Markdown:
+    ```markdown
+    ![Texto alternativo da imagem](/front-end-docs-1/nome-da-sua-imagem.png)
+    ```
+    *`front-end-docs-1` é o nome do repositório que está configurado no astro.config.mjs, todos os links devem partir dele.*
 
----
+## Deploy para GitHub Pages
 
-## 3. Quickstart 
+O site é automaticamente construído e implantado no GitHub Pages através de uma GitHub Action definida em `.github/workflows/deploy.yml`. Esta ação está configurada para:
 
-1. Verify you have Node.js installed. I use `nvm` and default to the LTS version for Node.js.
+*   Observar pushes para a branch `main`.
+*   Construir o projeto Astro localizado na pasta `website/`.
+*   Implantar o resultado na sua página do GitHub Pages.
 
+Nenhuma ação manual de deploy é necessária após o push para a branch `main`, desde que a Action esteja configurada corretamente.
+
+## Executando o Projeto Localmente
+
+Para visualizar suas alterações localmente antes de fazer o push:
+
+1.  **Navegue até a pasta do site:**
     ```bash
-    $ nvm use --lts
-    Now using node v18.16.0 (npm v9.6.7)
+    cd website
     ```
 
-2. Scaffold out a Starlight project with Astro.
-
+2.  **Instale as dependências** (se for a primeira vez ou se as dependências mudaram):
     ```bash
-    $ npm create astro@latest -- --template starlight
+    pnpm install
     ```
 
-    As part of setup, you define the destination folder (`website`), install dependencies and configure Typescript, git usage if needed. You can also disable telemetry capture using `npx astro telemetry disable` at this time.
-
-3. Preview the default Starlight site.
-
+3.  **Inicie o servidor de desenvolvimento:**
     ```bash
-    $ cd website
-    $ npm run dev
+    pnpm run dev
     ```
+    Isso iniciará um servidor local (geralmente em `http://localhost:4321`) onde você poderá see seu site Starlight. O servidor recarregará automaticamente as alterações feitas nos arquivos de conteúdo.
 
-    This runs a dev server on `http://localhost:3001` which watches `src/content` for changes (hot reload).
+## Contribuindo
 
-4. Open the browser to that URL and let's see what we got:
-
-      > A Landing Page (Light Mode)
-
-    ![Starlight Landing Page, Light mode](./static/02-landing-light.png)
-
-      > A Landing Page (Dark Mode)
-
-    ![Starlight Landing Page, Dark mode](./static/01-landing-dark.png)
-
-      > A Documentation Page (Default)
-
-    ![Starlight Documentation Page, Default](./static/03-page-original.png)
-
-      > The Documentation Page Updated (Hot Reload)
-
-    ![Starlight Documentation Page, Updated](./static/04-page-updated.png)
-
-      > The Search Feature (oh-oh!)
-
-    ![Starlight Search Feature, Disabled](./static/05-default-search.png)
-
-5. Alright, let's try to build the **production** version of the site locally.
-
-    ```bash
-    $ cd website
-    $ npm run build
-    ...
-    ...
-    Finished in 0.13 seconds
-    08:53:44 PM [build] 4 page(s) built in 4.61s
-    08:53:44 PM [build] Complete!
-    ```
-6. You'll notice this builds the production version in the `dist` folder. Let's preview it.
-
-    ```bash
-    $ npm run preview
-    ```
-    The output indicates the production server is running at `http://localhost:3000` - let's open that up. You see the same pages as before - but now let's try search. _In fact, let's search for the changed text from above to see if it can be found_.
-
-    > Search for "Related References" in Production
-
-    OMG - it works!! We didn't have to do anything extra to activate search indexes. Basic keyword search out of the box!
-
-    ![Starlight Production Preview, search](./static/06-production-search.png)
-
----
-
-## 4. Deployment
-
-Before we explore deploying the production build to GitHub Pages, let's commit the current version. **Done!**
-
-Now, let's [deploy the Astro Site to GitHub Pages](https://docs.astro.build/en/guides/deploy/github/). Astro provides an official `withastro/action` that should make this easy.
-
- 1. Set `site` and `base` options in `astro.config.js`
- 2. Create `.github/workflows/deploy.yml` and copy [the provided workflow](https://docs.astro.build/en/guides/deploy/github/).
- 3. Since we have our site source in the `website/` subfolder (vs. root of repo), uncomment the `with` section of the install steps in workflow and set the `path` to `./website`
- 4. Go to the GitHub repo's [Settings > Pages](https://github.com/30DaysOf/astro-starlight-ghpages/settings/pages) configuration. Choose `GitHub Actions` as the Source of your site. 
- 
-**Commit the changes in your code to GitHub**. You should see the deploy action run. If successful, the GitHub Pages endpoint should show the deployed site.  It's LIVE! [https://30daysof.github.io/astro-starlight-ghpages/](https://30daysof.github.io/astro-starlight-ghpages/)!!
-
-
-> Issue: Hero links not resolving base path correctly
-
-The "Example Guide" button on the landing page is mapped to "/guides/example/" but when clicked, does not take base prefix (repo path) into account, resulting in a 404. The same route used from the sidebar works just fine. **I am assuming this has to do with the difference in how links are resolved in frontmatter vs. markdown** _Issue raised in community chat. Waiting for response_.
-
----
-
-## 7. Adding Blog
-
-The [Starlight Blog](https://starlight-blog-docs.vercel.app/getting-started/) plugin from the community adds the blog feature to the default Starlight theme. Let's try it out.
-
-1. Install the plugin.
-
-    ```bash
-    $ npm install starlight-blog --save
-    ```
-2. Add the plugin to `astro.config.mjs` and configure it.
-
-    ```javascript
-    import starlight from '@astrojs/starlight'
-    import { defineConfig } from 'astro/config'
-    import starlightBlog from 'starlight-blog'
-
-    export default defineConfig({
-      integrations: [
-        starlight({
-          plugins: [starlightBlog()],
-          title: 'My Docs',
-        }),
-      ],
-    })
-    ```
-3. Customize [configuration](https://starlight-blog-docs.vercel.app/configuration) if needed.
-
-    ```javascript
-    import starlight from '@astrojs/starlight'
-    import { defineConfig } from 'astro/config'
-    import starlightBlog from 'starlight-blog'
-
-    export default defineConfig({
-      integrations: [
-        starlight({
-          plugins: [
-            starlightBlog({
-              title: "Blog",
-              postCount: 7,
-              recentPostCount: 1,
-              authors: {
-                nitya: {
-                  name: "Nitya",
-                  picture: "https://github.com/nitya.png",
-                  url: "https://github.com/nitya",
-                  title: "AI, Art & Advocacy @Microsoft",
-                }
-              },
-            }),
-          ],
-          title: 'My Docs',
-        }),
-      ],
-    })
-    ```
-  4. Extend the frontmatter schema
-
-  ```javascript
-  import { defineCollection } from 'astro:content';
-  import { docsSchema, i18nSchema } from '@astrojs/starlight/schema';
-  import { blogSchema } from 'starlight-blog/schema'
-
-  export const collections = {
-    docs: defineCollection({ schema: docsSchema({ extend: blogSchema() }) }),
-    i18n: defineCollection({ type: 'data', schema: i18nSchema() }),
-  };
-  ```
-
-  5. Now write your first blog post under `src/content/docs/blog` and see it show up in sidebar of blog. Update the link paths if needed.
+Certifique-se de que suas alterações sejam testadas localmente antes de enviá-las para a branch `main`. Siga as convenções de nomenclatura de arquivos e estrutura de pastas para manter a organização do projeto.
