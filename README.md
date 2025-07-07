@@ -1,4 +1,4 @@
-# Guia para Adicionar Conteúdo ao Repositório do Framework Starlight (Astro)
+# Guia para Adicionar Conteúdo - Starlight (Astro)
 
 Este README fornece instruções sobre como adicionar novo conteúdo a este repositório, que utiliza o framework Starlight para Astro. A pasta principal para o conteúdo do site é a `website/`.
 
