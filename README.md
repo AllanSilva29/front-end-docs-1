@@ -23,25 +23,21 @@ Para adicionar novas páginas à documentação:
 
 1.  Navegue até a pasta `website/src/content/docs/`.
 2.  Crie um novo arquivo com a extensão `.md` (Markdown) ou `.mdx` (MDX, Markdown com componentes JSX).
-3.  O nome do arquivo determinará a rota da página. Por exemplo, `nova-pagina.md` será acessível em `seusite.com/nova-pagina`.
-4.  Você pode organizar o conteúdo em subpastas dentro de `website/src/content/docs/` para criar seções aninhadas. Por exemplo, `website/src/content/docs/guia/parte-1.md` será acessível em `seusite.com/guia/parte-1`.
+3.  O nome do arquivo determinará a rota da página. Por exemplo, `nova-pagina.md` será acessível em `front-end-docs-1/nova-pagina`.
+4.  Você pode organizar o conteúdo em subpastas dentro de `website/src/content/docs/` para criar seções aninhadas. Por exemplo, `website/src/content/docs/guia/parte-1.md` será acessível em `front-end-docs-1/guia/parte-1`.
 
 ## Adicionando Imagens
 
 Para adicionar imagens que serão usadas nas suas páginas de documentação:
 
-1.  Coloque os arquivos de imagem na pasta `website/src/assets/`.
-2.  No seu arquivo Markdown, você pode referenciar a imagem usando um caminho relativo a partir da pasta `src/assets/`.
+1.  Coloque os arquivos de imagem na pasta `website/src/public/`.
+2.  No seu arquivo Markdown, você pode referenciar a imagem usando um caminho relativo a partir da pasta `src/public/`.
 
     Exemplo em Markdown:
     ```markdown
-    ![Texto alternativo da imagem](../../assets/nome-da-sua-imagem.png)
+    ![Texto alternativo da imagem](/front-end-docs-1/nome-da-sua-imagem.png)
     ```
-    *Ajuste o `../` conforme necessário dependendo da profundidade do seu arquivo Markdown dentro de `src/content/docs/`.*
-
-## Adicionando Ativos Estáticos
-
-Ativos estáticos, como `favicon.svg` ou `robots.txt`, devem ser colocados na pasta `website/public/`. Esses arquivos serão copiados para a raiz do site construído.
+    *`front-end-docs-1` é o nome do repositório que está configurado no astro.config.mjs, todos os links devem partir dele.*
 
 ## Deploy para GitHub Pages
 
