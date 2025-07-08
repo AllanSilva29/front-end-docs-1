@@ -1,0 +1,107 @@
+---
+title: 'Introdução ao CSS e Sintaxe'
+description: 'Descubra o que é CSS, qual seu papel no desenvolvimento web e como aplicar estilos a um documento HTML usando sua sintaxe básica.'
+---
+
+import { Aside, Card, CardGrid, Tabs, TabItem } from '@astrojs/starlight/components';
+
+Se o HTML é o "esqueleto" de uma página web, o **CSS** é o que lhe dá "pele, roupas e estilo". É a linguagem que usamos para controlar a aparência, o layout, as cores, as fontes e as animações dos nossos elementos HTML.
+
+## O que é CSS?
+
+**CSS** significa **Cascading Style Sheets** (Folhas de Estilo em Cascata). O nome já nos dá duas pistas importantes:
+
+-   **Style Sheets (Folhas de Estilo):** O código CSS é geralmente escrito em arquivos separados (`.css`), que funcionam como um "manual de estilo" para o nosso HTML.
+-   **Cascading (Cascata):** Este é um conceito fundamental. A "cascata" descreve a ordem em que as regras de estilo são aplicadas. O navegador combina estilos de diferentes fontes (estilos do navegador, estilos do usuário e estilos do desenvolvedor) e resolve conflitos através de um sistema de prioridades.
+
+## As Três Maneiras de Adicionar CSS
+
+Existem três formas de aplicar CSS a um documento HTML.
+
+<Tabs>
+<TabItem label="Externo (Preferido)">
+Esta é a maneira **mais comum e recomendada**. Você escreve seu CSS em um arquivo separado com a extensão `.css` e o vincula ao seu documento HTML usando a tag `<link>` dentro do `<head>`.
+
+###### Vantagens:
+-   **Separação de preocupações:** Mantém a estrutura (HTML) e a apresentação (CSS) em arquivos distintos.
+-   **Reutilização:** A mesma folha de estilo pode ser usada por múltiplas páginas HTML.
+-   **Cache:** O navegador pode armazenar o arquivo `.css` em cache, acelerando o carregamento de páginas subsequentes.
+
+```html
+<!-- Em seu arquivo index.html -->
+<head>
+  <link rel="stylesheet" href="styles.css">
+</head>
+```
+```css
+/* Em seu arquivo styles.css */
+body {
+  font-family: sans-serif;
+}
+```
+</TabItem>
+<TabItem label="Interno">
+Você pode escrever o código CSS diretamente no `<head>` do seu documento HTML, dentro de uma tag `<style>`.
+
+**Quando usar?** Útil para estilos que se aplicam a uma única página específica ou para fins de teste rápido.
+
+```html
+<head>
+  <style>
+    h1 {
+      color: blue;
+    }
+  </style>
+</head>
+<body>
+  <h1>Este título será azul.</h1>
+</body>
+```
+</TabItem>
+<TabItem label="Inline">
+Você pode aplicar estilos diretamente a um elemento HTML usando o atributo `style`.
+
+**Quando usar?** Deve ser evitado na maioria dos casos. Seu uso principal é quando os estilos precisam ser gerados dinamicamente por JavaScript (algo comum em React).
+
+```html
+<p style="color: red; font-size: 16px;">
+  Este parágrafo será vermelho.
+</p>
+```
+</TabItem>
+</Tabs>
+
+## A Sintaxe Básica de uma Regra CSS
+
+Uma regra CSS é composta por três partes principais:
+
+-   **Seletor:** Aponta para o(s) elemento(s) HTML que você deseja estilizar.
+-   **Propriedade:** O aspecto visual que você quer mudar (ex: `color`, `font-size`, `background-color`).
+-   **Valor:** O valor que você quer atribuir à propriedade.
+
+<Card title="🔍 Anatomia de uma Regra CSS">
+![Anatomia de uma Regra CSS](/front-end-docs-1/anatomy-of-css.png)
+
+A combinação de uma propriedade e um valor (`color: blue;`) é chamada de **declaração**. Múltiplas declarações para o mesmo seletor são agrupadas dentro de chaves `{}` e separadas por ponto e vírgula `;`.
+</Card>
+
+### Comentários em CSS
+
+Para adicionar comentários ao seu código CSS (que são ignorados pelo navegador), use `/*` para iniciar e `*/` para terminar.
+
+```css
+/* Este é um comentário de uma linha. */
+p {
+  color: green; /* Define a cor do texto para parágrafos. */
+}
+
+/*
+  Este é
+  um comentário
+  de múltiplas linhas.
+*/
+```
+
+---
+
+Agora que entendemos a sintaxe básica, o próximo passo é aprender as diferentes maneiras de "selecionar" os elementos que queremos estilizar. Vamos mergulhar em **Seletores e Especificidade**.

@@ -1,0 +1,123 @@
+---
+title: 'Seletores e Especificidade'
+description: 'Aprenda a usar seletores CSS para direcionar elementos HTML e entenda o conceito de especificidade para resolver conflitos de estilo.'
+---
+
+import { Aside, Card, CardGrid } from '@astrojs/starlight/components';
+
+**Seletores** são o coração do CSS. Eles são os padrões que usamos para "selecionar" os elementos HTML aos quais queremos aplicar um conjunto de regras de estilo.
+
+## Seletores Básicos
+
+Estes são os seletores que você usará com mais frequência.
+
+##### Seletor de Tipo (Tag)
+    Seleciona todos os elementos de um determinado tipo de tag.
+    ```css
+    /* Estiliza todos os parágrafos */
+    p {
+        line-height: 1.5;
+    }
+
+    /* Estiliza todos os links */
+    a {
+        text-decoration: none;
+    }
+    ```
+##### Seletor de Classe
+    ```html
+    <button class="btn btn-primary">Salvar</button>
+    ```
+    Seleciona todos os elementos que têm um determinado atributo `class`. Este é o seletor **mais versátil e recomendado** para uso geral. O seletor começa com um ponto (`.`).
+    
+    ```css
+    .btn {
+        padding: 8px 16px;
+        border-radius: 4px;
+    }
+    .btn-primary {
+        background-color: blue;
+        color: white;
+    }
+    ```
+##### Seletor de ID
+    ```html
+    <header id="main-header">...</header>
+    ```
+    Seleciona o único elemento na página que tem um determinado atributo `id`. O seletor começa com uma cerquilha (`#`). Como os IDs devem ser únicos, este seletor é muito poderoso e deve ser usado com moderação.
+    ```css
+    #main-header {
+        background-color: #f8f8f8;
+    }
+    ```
+
+## Combinadores
+
+Combinadores permitem selecionar elementos com base em sua relação com outros elementos na árvore do DOM.
+
+| Combinador            | Exemplo     | Descrição                                         |
+| :-------------------- | :---------- | :------------------------------------------------ |
+| **Descendente** (espaço) | `div p`     | Seleciona todos os `<p>` dentro de uma `<div>`.   |
+| **Filho** (`>`)         | `div > p`   | Seleciona os `<p>` que são filhos diretos de uma `<div>`. |
+| **Irmão Adjacente** (`+`) | `h1 + p`    | Seleciona o primeiro `<p>` que vem logo após um `<h1>`. |
+| **Irmão Geral** (`~`)   | `h1 ~ p`    | Seleciona todos os `<p>` que são irmãos de um `<h1>` e vêm depois dele. |
+
+
+## Pseudo-classes
+
+Pseudo-classes permitem estilizar elementos com base em seu estado ou posição, coisas que não podem ser expressas por seletores simples. Elas começam com dois-pontos (`:`).
+
+-   `:hover`: Aplica estilos quando o cursor do mouse está sobre o elemento.
+-   `:focus`: Aplica estilos quando o elemento está focado (ex: um `<input>` selecionado).
+-   `:first-child`: Seleciona o primeiro elemento filho de um pai.
+-   `:last-child`: Seleciona o último elemento filho de um pai.
+-   `:nth-child(n)`: Seleciona um elemento com base em sua posição. Ex: `:nth-child(2n)` seleciona todos os filhos pares.
+
+```css
+/* Muda a cor do link quando o mouse está sobre ele */
+a:hover {
+  color: red;
+}
+
+/* Adiciona uma borda azul ao input quando ele está focado */
+input:focus {
+  border-color: blue;
+}
+```
+
+## A "Guerra" da Especificidade
+
+O que acontece quando duas regras CSS tentam estilizar o mesmo elemento com a mesma propriedade?
+
+```css
+p { color: black; }
+.text-lead { color: gray; }
+```
+```html
+<p class="text-lead">Este parágrafo será cinza.</p>
+```
+O parágrafo será cinza porque um seletor de **classe** é mais específico que um seletor de **tipo**.
+
+**Especificidade** é o algoritmo que o navegador usa para determinar qual regra de estilo é a mais relevante e, portanto, qual deve ser aplicada.
+
+A hierarquia de especificidade, do mais forte para o mais fraco, é:
+
+1.  **Estilo Inline (`style="..."`)**: A mais alta prioridade. Quase sempre vence.
+2.  **ID (`#id`)**: Muito específico.
+3.  **Classe (`.class`), Atributo (`[type="..."]`) e Pseudo-classe (`:hover`)**: O nível de especificidade mais comum e útil.
+4.  **Tipo (`p`) e Pseudo-elemento (`::before`)**: A menor especificidade.
+
+<Aside type="tip" title="Como Calcular">
+Uma forma simples de pensar é em um sistema de pontos: `(Inline, ID, Classe, Tipo)`.
+- `.text-lead` tem `(0, 0, 1, 0)` pontos.
+- `p` tem `(0, 0, 0, 1)` pontos.
+- `(0, 0, 1, 0)` é maior que `(0, 0, 0, 1)`, então a regra da classe vence.
+
+Se houver um empate na especificidade, a regra que aparece por **último** no arquivo CSS é a que vence.
+</Aside>
+
+Entender a especificidade é crucial para evitar frustrações e escrever CSS previsível. A melhor prática é manter a especificidade o mais baixa e consistente possível, dependendo principalmente de classes.
+
+---
+
+Agora que sabemos como selecionar elementos, vamos entender como eles ocupam espaço na página. A seguir, exploraremos **O Box Model**.

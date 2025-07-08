@@ -1,0 +1,113 @@
+---
+title: 'Flexbox'
+description: 'Aprenda a usar o Flexible Box Layout (Flexbox) para criar layouts unidimensionais, alinhar e distribuir itens de forma fácil.'
+---
+
+import { Aside, Card, CardGrid } from '@astrojs/starlight/components';
+
+Por muitos anos, criar layouts complexos em CSS era uma tarefa difícil e cheia de "hacks". O **Flexible Box Layout**, ou simplesmente **Flexbox**, foi introduzido para resolver esse problema, oferecendo uma maneira eficiente de alinhar, distribuir e ordenar itens dentro de um contêiner, mesmo quando seus tamanhos são desconhecidos ou dinâmicos.
+
+Flexbox é um modelo de layout **unidimensional**, o que significa que ele lida com o layout em uma única dimensão por vez — seja uma **linha** ou uma **coluna**.
+
+## O Básico do Flexbox: Contêiner e Itens
+
+Para começar a usar o Flexbox, você precisa de dois componentes:
+
+1.  Um **contêiner flex** (o elemento pai), que é ativado com `display: flex;`.
+2.  Um ou mais **itens flex** (os elementos filhos diretos do contêiner).
+
+```html
+<div class="flex-container">
+  <div class="flex-item">1</div>
+  <div class="flex-item">2</div>
+  <div class="flex-item">3</div>
+</div>
+```
+```css
+.flex-container {
+  display: flex;
+  border: 2px solid #ccc;
+}
+.flex-item {
+  background-color: steelblue;
+  color: white;
+  padding: 1rem;
+}
+```
+
+Ao aplicar `display: flex`, os itens filhos imediatamente se alinham em uma linha.
+
+## Propriedades do Contêiner Flex
+
+As propriedades mais importantes são aplicadas ao **contêiner pai** para controlar o comportamento de todos os seus filhos.
+
+### `flex-direction`: Definindo o Eixo Principal
+
+Esta propriedade define a direção em que os itens flex são dispostos.
+-   `row` (padrão): Os itens se alinham horizontalmente, da esquerda para a direita.
+-   `column`: Os itens se alinham verticalmente, de cima para baixo.
+-   `row-reverse`: Alinha na horizontal, da direita para a esquerda.
+-   `column-reverse`: Alinha na vertical, de baixo para cima.
+
+### `justify-content`: Alinhamento no Eixo Principal
+
+Controla como os itens são distribuídos ao longo do **eixo principal** (o eixo definido por `flex-direction`).
+
+-   `flex-start` (padrão): Agrupa os itens no início.
+-   `flex-end`: Agrupa os itens no final.
+-   `center`: Centraliza os itens.
+-   `space-between`: Distribui os itens uniformemente, com o primeiro no início e o último no final.
+-   `space-around`: Distribui os itens uniformemente com espaço igual ao redor de cada um.
+-   `space-evenly`: Distribui os itens uniformemente com espaço igual entre todos.
+
+<Card title="Exemplo: Barra de Navegação">
+```css
+.navbar {
+  display: flex;
+  justify-content: space-between; /* Itens nas extremidades */
+  align-items: center; /* Centraliza verticalmente */
+  background: #333;
+  padding: 1rem;
+}
+```
+</Card>
+
+### `align-items`: Alinhamento no Eixo Cruzado
+
+Controla como os itens são alinhados ao longo do **eixo cruzado** (o eixo perpendicular ao principal).
+
+-   `stretch` (padrão): Estica os itens para preencher o contêiner.
+-   `flex-start`: Alinha os itens no início do eixo cruzado.
+-   `flex-end`: Alinha os itens no final do eixo cruzado.
+-   `center`: Centraliza os itens no eixo cruzado.
+-   `baseline`: Alinha os itens pela sua linha de base de texto.
+
+### `flex-wrap`: Quebra de Linha
+
+Por padrão, os itens flex tentarão se espremer em uma única linha. Para permitir que eles quebrem para a próxima linha quando não houver mais espaço, use:
+-   `nowrap` (padrão): Não permite a quebra.
+-   `wrap`: Permite que os itens quebrem para a próxima linha.
+-   `wrap-reverse`: Quebra para a próxima linha, mas em ordem inversa.
+
+## Propriedades dos Itens Flex
+
+Você também pode aplicar propriedades aos **itens filhos** para controlar seu comportamento individual.
+
+-   **`flex-grow`**: Define a capacidade de um item "crescer" e ocupar o espaço livre. Um valor de `1` significa que ele pode crescer.
+-   **`flex-shrink`**: Define a capacidade de um item "encolher" se não houver espaço suficiente.
+-   **`order`**: Permite reordenar visualmente os itens, independentemente de sua ordem no HTML.
+
+<Aside type="tip">
+Um caso de uso comum é fazer um item ocupar todo o espaço restante em uma barra de navegação.
+```css
+.nav-item-search {
+  flex-grow: 1; /* Este item crescerá para preencher o espaço */
+}
+```
+</Aside>
+
+Dominar o Flexbox é uma das habilidades mais importantes para um desenvolvedor front-end. Ele resolve a maioria dos problemas de alinhamento e distribuição com elegância e simplicidade.
+
+---
+
+O Flexbox é perfeito para layouts de uma dimensão. Mas e quando precisamos alinhar itens em linhas e colunas ao mesmo tempo? Para isso, temos uma ferramenta ainda mais poderosa: o **Grid Layout**.

@@ -1,0 +1,140 @@
+---
+title: 'Grid Layout'
+description: 'Domine o CSS Grid Layout, a ferramenta mais poderosa para criar layouts bidimensionais (linhas e colunas) complexos e responsivos.'
+---
+
+import { Aside, Card, CardGrid } from '@astrojs/starlight/components';
+
+Enquanto o [Flexbox](/front-end-docs-1/1-fundamentos-web/3-css-moderno/4-flexbox/) é excelente para alinhar conteúdo em uma única dimensão (uma linha ou uma coluna), o **CSS Grid Layout** (ou simplesmente Grid) foi projetado para layouts **bidimensionais**. Pense nele como uma planilha ou uma tabela, onde você tem controle total sobre linhas e colunas simultaneamente.
+
+Grid é a ferramenta mais poderosa que temos hoje para criar a macroestrutura de uma página web.
+
+## Flexbox vs. Grid: Quando Usar Cada Um?
+
+Uma boa regra geral é:
+
+-   **Flexbox** é para **alinhar conteúdo**. Use-o para componentes menores, como barras de navegação, cards, ou para alinhar itens dentro de uma área. É "content-first".
+-   **Grid** é para **definir o layout**. Use-o para a estrutura principal da sua página, dividindo-a em grandes regiões como cabeçalho, sidebar, conteúdo principal e rodapé. É "layout-first".
+
+<Aside type="tip">
+Eles não são mutuamente exclusivos! É muito comum usar Grid para o layout geral e Flexbox para alinhar o conteúdo *dentro* de uma célula do Grid.
+</Aside>
+
+## O Básico do Grid: Contêiner e Itens
+
+Assim como no Flexbox, o Grid funciona com um contêiner pai e itens filhos.
+
+```html
+<div class="grid-container">
+  <div class="grid-item">1</div>
+  <div class="grid-item">2</div>
+  <div class="grid-item">3</div>
+  <div class="grid-item">4</div>
+</div>
+```
+```css
+.grid-container {
+  display: grid;
+  border: 2px solid #ccc;
+}
+.grid-item {
+  background-color: darkcyan;
+  color: white;
+  padding: 1rem;
+}
+```
+Aplicar `display: grid` por si só não faz muita coisa visualmente. Precisamos definir as trilhas (tracks) da nossa grade.
+
+## Definindo a Grade
+
+As propriedades mais importantes para definir a estrutura da sua grade são aplicadas ao contêiner.
+
+### `grid-template-columns` e `grid-template-rows`
+
+Essas propriedades definem o número e o tamanho das colunas e linhas da sua grade, respectivamente.
+
+```css
+.grid-container {
+  display: grid;
+  /* Cria uma grade com 3 colunas e 2 linhas */
+  grid-template-columns: 200px 100px 200px;
+  grid-template-rows: 150px 150px;
+}
+```
+
+### A Unidade `fr` (Fração)
+
+A unidade `fr` foi criada especificamente para o Grid e representa uma **fração do espaço disponível** no contêiner. Ela é incrivelmente útil para criar layouts fluidos.
+
+```css
+.grid-container {
+  display: grid;
+  /* Cria 3 colunas. A segunda coluna tem 1/4 do espaço total,
+     e as outras duas dividem o espaço restante igualmente. */
+  grid-template-columns: 1fr 2fr 1fr;
+}
+```
+
+Você também pode usar a função `repeat()` para evitar repetição:
+```css
+/* Cria 12 colunas, cada uma com 1 fração do espaço. */
+grid-template-columns: repeat(12, 1fr);
+```
+
+### Espaçamento com `gap`
+
+Para criar um espaçamento (gutter) entre as células da grade, use a propriedade `gap`.
+
+```css
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem; /* 16px de espaçamento entre todas as linhas e colunas */
+}
+```
+
+## Posicionando Itens na Grade
+
+Por padrão, os itens preenchem a grade um por um. Mas você pode controlar exatamente onde cada item começa e termina.
+
+-   `grid-column-start` / `grid-column-end`
+-   `grid-row-start` / `grid-row-end`
+
+Ou usando as propriedades de atalho:
+-   `grid-column: <linha-de-início> / <linha-de-fim>;`
+-   `grid-row: <linha-de-início> / <linha-de-fim>;`
+
+As "linhas" da grade são as linhas imaginárias entre as colunas e as linhas. Uma grade de 3 colunas tem 4 linhas de coluna.
+
+<Card title="Exemplo: Layout de Blog">
+```css
+.blog-layout {
+  display: grid;
+  grid-template-columns: 2fr 1fr; /* Conteúdo principal mais largo, sidebar mais estreita */
+  gap: 2rem;
+}
+
+.main-content {
+  grid-column: 1 / 2; /* Começa na linha 1, termina na linha 2 */
+}
+
+.sidebar {
+  grid-column: 2 / 3; /* Começa na linha 2, termina na linha 3 */
+}
+```
+</Card>
+
+Você também pode fazer um item se estender por várias trilhas usando a palavra-chave `span`.
+```css
+.header {
+  grid-column: 1 / -1; /* O '-1' é um atalho para a última linha da grade */
+  /* ou */
+  grid-column: span 2; /* Estende-se por 2 colunas */
+}
+```
+
+Grid é uma ferramenta imensamente poderosa. Com essas propriedades básicas, você já pode construir layouts complexos e robustos que antes exigiriam frameworks de CSS ou hacks complicados.
+
+---
+
+Com o conhecimento de Flexbox e Grid, podemos criar layouts para qualquer tamanho de tela. Mas como fazemos para que um mesmo layout se **adapte** a diferentes telas? A resposta está no **Design Responsivo e Media Queries**.

@@ -1,0 +1,91 @@
+---
+title: 'O Box Model'
+description: 'Entenda o Box Model, o conceito fundamental do CSS que trata cada elemento HTML como uma caixa com conteúdo, padding, borda e margem.'
+---
+
+import { Aside, Card, CardGrid } from '@astrojs/starlight/components';
+
+No CSS, tudo é uma caixa. Literalmente. Todo elemento HTML que você renderiza na tela é tratado pelo navegador como uma caixa retangular. O **Box Model** (Modelo de Caixa) é a regra que define como essa caixa é dimensionada e como ela interage com outras caixas ao seu redor.
+
+Compreender o Box Model é a chave para controlar o tamanho, o espaçamento e o posicionamento dos seus elementos.
+
+## As Quatro Camadas da Caixa
+
+Cada caixa é composta por quatro camadas, de dentro para fora:
+
+<Card>
+![Diagrama do Box Model](/front-end-docs-1/box-model.png)
+</Card>
+
+<dl>
+  <dt>1. <code>Content</code> (Conteúdo)</dt>
+  <dd>
+    A área onde seu conteúdo real (texto, imagem, vídeo) é exibido. Suas dimensões são definidas pelas propriedades `width` e `height`.
+  </dd>
+  <dt>2. <code>Padding</code> (Preenchimento)</dt>
+  <dd>
+    Uma área transparente que cria um **espaçamento interno**, entre o conteúdo e a borda. É como a "margem de respiro" dentro da caixa. Controlado pela propriedade `padding`.
+  </dd>
+  <dt>3. <code>Border</code> (Borda)</dt>
+  <dd>
+    A linha que envolve o conteúdo e o padding. Ela tem espessura, estilo (sólida, pontilhada, etc.) e cor. Controlada pela propriedade `border`.
+  </dd>
+  <dt>4. <code>Margin</code> (Margem)</dt>
+  <dd>
+    Uma área transparente que cria um **espaçamento externo**, entre a borda da sua caixa e as caixas de outros elementos. É usada para afastar os elementos uns dos outros. Controlada pela propriedade `margin`.
+  </dd>
+</dl>
+
+**Exemplo Prático:**
+
+```css
+.minha-caixa {
+  width: 200px;
+  height: 100px;
+  padding: 20px;
+  border: 5px solid black;
+  margin: 30px;
+}
+```
+Esta regra cria uma caixa com:
+- Uma área de conteúdo de 200x100 pixels.
+- 20 pixels de espaçamento interno em todos os lados.
+- Uma borda preta sólida de 5 pixels de espessura.
+- 30 pixels de espaçamento externo em todos os lados, afastando-a de outros elementos.
+
+## `box-sizing`: A Propriedade que Muda Tudo
+
+Historicamente, o cálculo do tamanho total de uma caixa era confuso. Por padrão (`box-sizing: content-box`), se você definisse `width: 200px`, `padding: 20px` e `border: 5px`, a largura **total** da caixa na tela seria:
+
+`200px (conteúdo) + 40px (padding esq/dir) + 10px (borda esq/dir) = 250px`
+
+Isso é contraintuitivo. Você define uma largura e o elemento acaba com outra.
+
+### A Solução Moderna: `border-box`
+
+Para resolver isso, usamos `box-sizing: border-box`. Com essa propriedade, a `width` e a `height` que você define passam a incluir o `padding` e a `border`. O navegador ajusta o tamanho do conteúdo *para dentro* para que a caixa mantenha as dimensões que você especificou.
+
+-   **`box-sizing: content-box` (padrão antigo):** `width` = largura do conteúdo.
+-   **`box-sizing: border-box` (padrão moderno):** `width` = largura total (conteúdo + padding + borda).
+
+<Card title="🌎 A Melhor Prática Universal">
+É uma prática quase universal hoje em dia aplicar `box-sizing: border-box` a todos os elementos do seu site. Isso torna o dimensionamento de layouts muito mais previsível e fácil.
+
+```css
+/* Este código é frequentemente um dos primeiros em qualquer folha de estilo. */
+html {
+  box-sizing: border-box;
+}
+*, *::before, *::after {
+  box-sizing: inherit; /* Faz todos os elementos herdarem do html */
+}
+```
+</Card>
+
+<Aside type="tip">
+Use as **Ferramentas de Desenvolvedor** do seu navegador (clique com o botão direito em um elemento e selecione "Inspecionar") para visualizar o Box Model de qualquer elemento na aba "Computed" ou "Layout". É a melhor maneira de depurar problemas de espaçamento.
+</Aside>
+
+---
+
+Com o Box Model dominado, você entende como os elementos individuais ocupam espaço. O próximo passo é aprender a organizar múltiplas caixas em layouts complexos. Começaremos com a ferramenta mais importante para layouts unidimensionais: o **Flexbox**.
