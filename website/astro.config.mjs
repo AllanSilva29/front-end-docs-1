@@ -12,26 +12,7 @@ export default defineConfig({
 	integrations: [
 		starlight({
 
-			// Add plugins
-			// FIXME: Plugin route not working. Debug later.
-			plugins: [
-				/*
-				starlightBlog({
-				  title: "Blog",
-				  postCount: 7,
-				  recentPostCount: 1,
-				  authors: {
-					nitya: {
-					  name: "Nitya Narasimhan, PhD",
-					  picture: "https://github.com/nitya.png",
-					  url: "https://github.com/nitya",
-					  title: "AI, Art & Advocacy @Microsoft",
-					}
-				  },
-				}),
-				*/
-			],
-
+			plugins: [],
 			title: 'Guia Front-End',
 			social: {
 				github: 'https://github.com/AllanSilva29/front-end-docs-1',
@@ -40,13 +21,37 @@ export default defineConfig({
 				{
 					label: 'Guias',
 					items: [
-						// Each item here is one entry in the navigation menu.
 						{ label: 'Exemplo de Guia', link: 'guides/example/' },
 					],
 				},
 				{
 					label: 'Referência',
 					autogenerate: { directory: 'reference' },
+				},
+				{
+					label: 'Fundamentos da Web',
+					items: [
+						{
+							label: 'Conceitos de Programação',
+							autogenerate: { directory: '1-fundamentos-web/1-conceitos-de-programacao' }, // Esse é um jeito mais tranquilo e autogerar rotas
+						},
+						{
+							label: 'HTML Essencial',
+							autogenerate: { directory: '1-fundamentos-web/2-html-essencial' },
+						},
+						{
+							label: 'CSS Moderno',
+							autogenerate: { directory: '1-fundamentos-web/3-css-moderno' },
+						},
+						{
+							label: 'JavaScript para React',
+							autogenerate: { directory: '1-fundamentos-web/4-javascript' },
+						},
+						// {
+						// 	label: 'TypeScript Essencial',
+						// 	autogenerate: { directory: '1-fundamentos-web/5-typescript-essencial' },
+						// },
+					],
 				},
 				{
 					label: 'Fundamentos do React',
