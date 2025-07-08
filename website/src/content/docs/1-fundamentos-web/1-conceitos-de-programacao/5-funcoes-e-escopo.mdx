@@ -1,0 +1,103 @@
+---
+title: 'Funções e Escopo'
+description: 'Aprenda sobre funções, os blocos de código reutilizáveis que formam a espinha dorsal de qualquer aplicação, e entenda o conceito de escopo.'
+---
+
+import { Aside, Card, CardGrid } from '@astrojs/starlight/components';
+
+À medida que os programas crescem, simplesmente escrever uma longa sequência de instruções se torna insustentável. Precisamos de uma maneira de organizar e reutilizar o código. É aqui que entram as **funções**.
+
+## O Que é uma Função?
+
+Uma **função** é um bloco de código nomeado, projetado para realizar uma tarefa específica. Uma vez definida, uma função pode ser **chamada** (ou invocada) repetidamente de diferentes partes do seu programa.
+
+Pense nelas como receitas: você define a receita uma vez (os passos para fazer um bolo) e pode usá-la sempre que quiser fazer aquele bolo, sem precisar reescrever os passos.
+
+### Declarando e Chamando Funções
+
+O processo tem duas partes:
+
+1.  **Declaração da Função:** Definir o que a função faz.
+2.  **Chamada da Função:** Executar o código dentro da função.
+
+```javascript
+// 1. Declaração da função chamada 'saudacao'
+function saudacao() {
+  console.log("Olá! Bem-vindo(a) ao nosso programa.");
+}
+
+// 2. Chamada (execução) da função
+saudacao(); // Saída: "Olá! Bem-vindo(a) ao nosso programa."
+saudacao(); // Podemos chamá-la quantas vezes quisermos.
+```
+
+### Parâmetros e Argumentos
+
+Funções se tornam muito mais poderosas quando podem receber dados para trabalhar.
+
+-   **Parâmetros:** São as "variáveis" listadas na definição da função. Eles atuam como placeholders para os dados que a função espera receber.
+-   **Argumentos:** São os **valores reais** que você passa para a função quando a chama.
+
+```javascript
+// 'nome' é um parâmetro
+function saudacaoPersonalizada(nome) {
+  console.log("Olá, " + nome + "!");
+}
+
+// "Ana" e "Carlos" são argumentos
+saudacaoPersonalizada("Ana");    // Saída: "Olá, Ana!"
+saudacaoPersonalizada("Carlos"); // Saída: "Olá, Carlos!"
+```
+
+### A Declaração `return`
+
+Além de receber dados, as funções também podem **retornar** um valor de volta para o local onde foram chamadas. A palavra-chave `return` encerra a execução da função e envia um valor de volta.
+
+```javascript
+function somar(a, b) {
+  // A função retorna o resultado da soma
+  return a + b;
+}
+
+// O valor retornado por somar(5, 3) é atribuído à variável 'resultado'
+let resultado = somar(5, 3);
+
+console.log(resultado); // Saída: 8
+```
+Funções que retornam um valor são extremamente úteis para realizar cálculos e transformações de dados.
+
+## Escopo: Onde as Variáveis Vivem
+
+**Escopo** define a acessibilidade ou visibilidade de variáveis. Em outras palavras, ele determina em quais partes do seu programa uma variável pode ser usada.
+
+<CardGrid>
+	<Card title="Escopo Global">
+		Variáveis declaradas fora de qualquer função pertencem ao escopo global. Elas podem ser acessadas de qualquer lugar no seu código. É uma boa prática evitar o uso excessivo de variáveis globais para prevenir conflitos.
+        ```js
+        let nomeGlobal = "Mundo"; // Variável global
+
+        function dizerOi() {
+          console.log("Oi, " + nomeGlobal);
+        }
+
+        dizerOi(); // Acessa a variável global
+        ```
+	</Card>
+    <br/>
+	<Card title="Escopo Local (ou de Função)">
+		Variáveis declaradas **dentro** de uma função são locais a essa função. Elas só podem ser acessadas de dentro da própria função. Isso ajuda a manter as funções independentes e evita que elas interfiram umas com as outras.
+        ```js
+        function calcular() {
+          let numeroSecreto = 42; // Variável local
+          console.log(numeroSecreto);
+        }
+
+        calcular(); // Saída: 42
+        // console.log(numeroSecreto); // ERRO! numeroSecreto não está definido aqui.
+        ```
+	</Card>
+</CardGrid>
+
+<Aside type="tip">
+O conceito de escopo é fundamental em JavaScript. Na seção de **JavaScript para React**, exploraremos como `let` e `const` introduziram o **escopo de bloco**, que é ainda mais restrito que o escopo de função.
+</Aside>

@@ -1,0 +1,86 @@
+---
+title: 'Estruturas de Repetição'
+description: 'Descubra como usar laços de repetição como for e while para executar um bloco de código múltiplas vezes de forma eficiente.'
+---
+
+import { Aside, Card, CardGrid, Tabs, TabItem } from '@astrojs/starlight/components';
+
+Muitas tarefas em programação são repetitivas. Em vez de escrever o mesmo código várias vezes, usamos **estruturas de repetição**, também conhecidas como **laços** ou **loops**, para executar um bloco de código quantas vezes for necessário.
+
+## O Laço `for`
+
+O laço `for` é ideal quando você sabe **quantas vezes** quer que o bloco de código seja repetido. Sua sintaxe é composta por três partes, separadas por ponto e vírgula:
+
+1.  **Inicialização:** Executada uma única vez, antes do início do laço. Geralmente usada para declarar uma variável contadora (ex: `let i = 0`).
+2.  **Condição:** Verificada antes de cada iteração. Se for `true`, o laço continua; se for `false`, o laço termina.
+3.  **Incremento (ou decremento):** Executado ao final de cada iteração. Geralmente usado para atualizar a variável contadora (ex: `i++`).
+
+**Exemplo: Contar de 1 a 5**
+```javascript
+for (let i = 1; i <= 5; i++) {
+  console.log("O número é: " + i);
+}
+// Saída:
+// O número é: 1
+// O número é: 2
+// O número é: 3
+// O número é: 4
+// O número é: 5
+```
+
+## O Laço `while`
+
+O laço `while` (enquanto) é mais adequado quando você quer repetir um bloco de código **enquanto uma condição for verdadeira**, mas você não sabe exatamente quantas iterações serão necessárias.
+
+**Exemplo: Simular um sorteio até sair o número 7**
+```javascript
+let numeroSorteado = 0;
+
+while (numeroSorteado !== 7) {
+  numeroSorteado = Math.floor(Math.random() * 10) + 1; // Sorteia um número de 1 a 10
+  console.log("Número sorteado: " + numeroSorteado);
+}
+
+console.log("Finalmente! O número 7 foi sorteado.");
+```
+
+<Aside type="caution" title="Cuidado com Loops Infinitos!">
+Ao usar o laço `while`, é crucial garantir que a condição em algum momento se torne `false`. Caso contrário, você criará um **loop infinito**, que fará seu programa ou navegador travar.
+</Aside>
+
+## Iterando sobre Arrays
+
+Uma das tarefas mais comuns para laços de repetição é percorrer os itens de um array. Embora seja possível usar um laço `for` tradicional, JavaScript oferece sintaxes mais modernas e legíveis para isso.
+
+<Tabs>
+<TabItem label="Método `.forEach()`">
+O método `forEach` executa uma função para cada elemento do array. É uma forma declarativa e limpa de iterar.
+
+```javascript
+const frutas = ["Maçã", "Banana", "Morango"];
+
+frutas.forEach(function(fruta, index) {
+  console.log(`Índice ${index}: ${fruta}`);
+});
+```
+</TabItem>
+<TabItem label="Laço `for...of`">
+O laço `for...of` é uma sintaxe mais moderna que itera sobre os **valores** de objetos iteráveis, como arrays e strings. É muito legível.
+
+```javascript
+const frutas = ["Maçã", "Banana", "Morango"];
+
+for (const fruta of frutas) {
+  console.log(fruta);
+}
+```
+</TabItem>
+</Tabs>
+
+<Card title="E os métodos `.map`, `.filter` e `.reduce`?" icon="document">
+Na seção de **JavaScript para React**, exploraremos métodos de array como `.map()`, `.filter()` e `.reduce()`. Eles também iteram sobre arrays, mas são usados para **transformar** dados e criar novos arrays, sendo extremamente importantes no desenvolvimento com React.
+</Card>
+
+---
+
+Com a capacidade de repetir tarefas, nossa caixa de ferramentas de programação está quase completa. O último passo é aprender a organizar nosso código em blocos reutilizáveis, o que nos leva ao conceito de **Funções e Escopo**.

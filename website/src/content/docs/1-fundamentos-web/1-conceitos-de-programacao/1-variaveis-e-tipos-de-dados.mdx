@@ -1,0 +1,92 @@
+---
+title: 'Variáveis e Tipos de Dados'
+description: 'Entenda os conceitos fundamentais de variáveis e os tipos de dados primitivos que formam a base de qualquer programa.'
+---
+
+import { Aside, Card, CardGrid } from '@astrojs/starlight/components';
+
+No cerne de qualquer programa de computador está a necessidade de armazenar e manipular informações. Para fazer isso, usamos **variáveis**.
+
+## O Que é uma Variável?
+
+Pense em uma variável como uma **caixa com uma etiqueta**.
+
+-   A **etiqueta** é o **nome** da variável. Você usa esse nome para se referir à caixa.
+-   O **conteúdo** da caixa é o **valor** que a variável armazena.
+
+Em programação, usamos variáveis para guardar dados que podem ser usados ou modificados posteriormente no nosso código.
+
+### Declaração e Atribuição
+
+O processo de criar uma variável e dar um valor a ela envolve dois passos:
+
+1.  **Declaração:** Criar a "caixa" e dar um nome a ela. Em JavaScript, usamos as palavras-chave `let` ou `const`.
+2.  **Atribuição:** Colocar um valor dentro da "caixa" usando o sinal de igual (`=`).
+
+```javascript
+// Declaração da variável 'userName'
+let userName;
+
+// Atribuição de um valor à variável 'userName'
+userName = "Maria";
+
+// Você também pode declarar e atribuir na mesma linha
+let userAge = 30;
+```
+<Aside type="tip">
+A palavra-chave `const` é usada para declarar variáveis cujo valor **não mudará**. `let` é usada para variáveis que podem ter seu valor reatribuído. Aprofundaremos nisso na seção de JavaScript.
+</Aside>
+
+## Tipos de Dados Primitivos
+
+O tipo de "coisa" que você pode guardar em uma variável é chamado de **tipo de dado**. Em JavaScript, existem vários tipos de dados primitivos (os mais básicos).
+
+<CardGrid>
+	<Card title="String 💬">
+		Representa texto. O valor deve estar entre aspas simples (`' '`), duplas (`" "`) ou crases (`` ` ``).
+        ```js
+        let greeting = "Olá, mundo!";
+        ```
+	</Card>
+    <br/>
+	<Card title="Number 🔢">
+		Representa tanto números inteiros quanto de ponto flutuante (decimais).
+        ```js
+        let quantity = 10;
+        let price = 19.99;
+        ```
+	</Card>
+    <br/>
+    <Card title="Boolean 🟢🔴">
+		Representa um valor lógico de verdadeiro (`true`) ou falso (`false`). É a base para a tomada de decisões no código.
+        ```js
+        let isLoggedIn = true;
+        let hasPermission = false;
+        ```
+	</Card>
+    <br/>
+    <Card title="Undefined ❓">
+		Uma variável que foi declarada mas **nunca teve um valor atribuído** tem o valor e o tipo `undefined`. Significa "ausência de valor".
+        ```js
+        let userProfile; // O valor de userProfile é undefined
+        ```
+	</Card>
+    <br/>
+    <Card title="Null 🕳️">
+        Representa a ausência **intencional** de um valor de objeto. É diferente de `undefined`. Você, como programador, define uma variável como `null` para indicar que ela está "vazia" de propósito.
+        ```js
+        let selectedProduct = null; // O usuário ainda não selecionou nada
+        ```
+	</Card>
+</CardGrid>
+
+### Tipagem Dinâmica
+
+JavaScript é uma linguagem de **tipagem dinâmica**. Isso significa que você não precisa declarar o tipo de uma variável quando a cria. A mesma variável pode guardar um `number` em um momento e uma `string` em outro.
+
+```javascript
+let myVar = 42;      // myVar é do tipo Number
+myVar = "quarenta e dois"; // Agora, myVar é do tipo String
+```
+
+Embora isso ofereça flexibilidade, também pode ser uma fonte de erros. É por isso que ferramentas como o **TypeScript** foram criadas, para adicionar um sistema de tipagem estática opcional ao JavaScript.

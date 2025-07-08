@@ -1,0 +1,101 @@
+---
+title: 'Operadores'
+description: 'Aprenda sobre os diferentes tipos de operadores usados para realizar cálculos, atribuições, comparações e lógica em programação.'
+---
+
+import { Aside, Card, CardGrid } from '@astrojs/starlight/components';
+
+**Operadores** são símbolos especiais que realizam operações em valores e variáveis. Eles são os "verbos" da programação, permitindo-nos calcular, comparar e combinar dados.
+
+## Operadores Aritméticos
+
+São os operadores matemáticos básicos que você já conhece.
+
+| Operador | Nome           | Exemplo         | Resultado |
+| :------- | :------------- | :-------------- | :-------- |
+| `+`      | Adição         | `5 + 3`         | `8`       |
+| `-`      | Subtração      | `5 - 3`         | `2`       |
+| `*`      | Multiplicação  | `5 * 3`         | `15`      |
+| `/`      | Divisão        | `6 / 3`         | `2`       |
+| `%`      | Módulo (Resto) | `5 % 3`         | `2`       |
+
+<Aside type="note">
+O operador `+` também é usado para **concatenação** de strings: `"Olá" + " " + "Mundo"` resulta em `"Olá Mundo"`.
+</Aside>
+
+## Operadores de Atribuição
+
+O operador mais comum é o de atribuição simples (`=`), que define o valor de uma variável. Existem também operadores de atalho para modificar uma variável com base em seu valor atual.
+
+| Operador | Exemplo       | Equivalente a     |
+| :------- | :------------ | :---------------- |
+| `x = y`  | `x = 5`       | `x = 5`           |
+| `x += y` | `x += 5`      | `x = x + 5`       |
+| `x -= y` | `x -= 5`      | `x = x - 5`       |
+| `x *= y` | `x *= 5`      | `x = x * 5`       |
+| `x /= y` | `x /= 5`      | `x = x / 5`       |
+
+
+## Operadores de Comparação
+
+Operadores de comparação avaliam dois valores e retornam um valor booleano (`true` ou `false`). Eles são a base das estruturas condicionais.
+
+| Operador | Nome                       | Exemplo        | Resultado |
+| :------- | :------------------------- | :------------- | :-------- |
+| `==`     | Igual a                    | `5 == "5"`     | `true`    |
+| `===`    | Estritamente igual a       | `5 === "5"`    | `false`   |
+| `!=`     | Diferente de               | `5 != "5"`     | `false`   |
+| `!==`    | Estritamente diferente de  | `5 !== "5"`    | `true`    |
+| `>`      | Maior que                  | `5 > 3`        | `true`    |
+| `<`      | Menor que                  | `5 < 3`        | `false`   |
+| `>=`     | Maior ou igual a           | `5 >= 5`       | `true`    |
+| `<=`     | Menor ou igual a           | `5 <= 3`       | `false`   |
+
+
+<Card title="‼️ A Importância da Comparação Estrita (`===`)">
+O operador `==` tenta converter os tipos dos valores antes de compará-los (coerção de tipo), o que pode levar a resultados inesperados (`5 == "5"` é `true`).
+
+O operador `===` (igualdade estrita) é quase sempre a melhor escolha. Ele verifica se tanto o **valor** quanto o **tipo** são iguais, sem fazer conversões. `5 === "5"` é `false` porque, embora os valores sejam parecidos, um é `Number` e o outro é `String`. **Prefira sempre `===` e `!==`**.
+</Card>
+
+## Operadores Lógicos
+
+Operadores lógicos são usados para combinar múltiplas expressões booleanas.
+
+
+    ### `&&` (E Lógico)
+		Retorna `true` somente se **ambas** as condições forem verdadeiras.
+        ```js
+        let idade = 25;
+        let temHabilitacao = true;
+        
+        // true && true -> true
+        if (idade >= 18 && temHabilitacao) {
+          console.log("Pode dirigir.");
+        }
+        ```
+	### `||` (OU Lógico)
+		Retorna `true` se **pelo menos uma** das condições for verdadeira.
+        ```js
+        let temIngresso = false;
+        let ehConvidado = true;
+
+        // false || true -> true
+        if (temIngresso || ehConvidado) {
+          console.log("Pode entrar na festa.");
+        }
+        ```
+	### `!` (NÃO Lógico)
+		Inverte um valor booleano. Transforma `true` em `false` e `false` em `true`.
+        ```js
+        let portaAberta = false;
+        
+        // !false -> true
+        if (!portaAberta) {
+          console.log("A porta está fechada.");
+        }
+        ```
+        
+---
+
+Com um entendimento sólido de como manipular e comparar dados, estamos prontos para fazer nossos programas tomarem decisões. A seguir, exploraremos as **Estruturas Condicionais**.

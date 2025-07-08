@@ -1,0 +1,125 @@
+---
+title: 'Estruturas Condicionais'
+description: 'Aprenda a controlar o fluxo do seu programa com estruturas condicionais como if, else, else if e switch, permitindo que seu código tome decisões.'
+---
+
+import { Aside, Card, CardGrid, Tabs, TabItem } from '@astrojs/starlight/components';
+
+Programas não seguem um caminho linear. Eles precisam reagir a diferentes situações e tomar decisões com base nos dados que possuem. As **estruturas condicionais** são as ferramentas que nos permitem controlar o fluxo de execução do código.
+
+## A Declaração `if`
+
+A estrutura `if` (se) é a forma mais básica de tomada de decisão. Ela executa um bloco de código somente se uma condição específica for avaliada como `true`.
+
+**Sintaxe:**
+```javascript
+if (condição) {
+  // Bloco de código a ser executado se a condição for verdadeira
+}
+```
+
+**Exemplo:**
+```javascript
+let temperatura = 28;
+
+if (temperatura > 25) {
+  console.log("Está calor! É um bom dia para ir à praia.");
+}
+```
+Como `28 > 25` é `true`, a mensagem será exibida no console.
+
+## A Declaração `else`
+
+Frequentemente, queremos executar um bloco de código alternativo caso a condição do `if` seja `false`. Para isso, usamos a declaração `else` (senão).
+
+**Sintaxe:**
+```javascript
+if (condição) {
+  // Bloco de código se a condição for verdadeira
+} else {
+  // Bloco de código se a condição for falsa
+}
+```
+
+**Exemplo:**
+```javascript
+let idade = 17;
+
+if (idade >= 18) {
+  console.log("Você é maior de idade e pode votar.");
+} else {
+  console.log("Você é menor de idade e ainda não pode votar.");
+}
+```
+
+## A Declaração `else if`
+
+Para testar múltiplas condições em sequência, podemos usar o `else if`. Ele permite criar uma cadeia de verificações. O programa executará o bloco de código do primeiro `if` ou `else if` cuja condição for `true` e ignorará o resto.
+
+**Exemplo:**
+```javascript
+let nota = 85;
+
+if (nota >= 90) {
+  console.log("Nota: A");
+} else if (nota >= 80) {
+  console.log("Nota: B"); // Esta condição é verdadeira, o código para aqui.
+} else if (nota >= 70) {
+  console.log("Nota: C");
+} else {
+  console.log("Nota: D");
+}
+```
+
+## A Estrutura `switch`
+
+Quando você precisa comparar uma única variável com vários valores possíveis, usar uma longa cadeia de `if/else if` pode ser verboso. A estrutura `switch` oferece uma alternativa mais limpa para esses casos.
+
+<Tabs>
+<TabItem label="Exemplo com `switch`">
+```javascript
+let permissao = "admin";
+
+switch (permissao) {
+  case "admin":
+    console.log("Acesso total concedido.");
+    break; // A palavra 'break' impede que o código continue para o próximo 'case'.
+  case "editor":
+    console.log("Acesso para editar conteúdo.");
+    break;
+  case "leitor":
+    console.log("Acesso apenas para visualização.");
+    break;
+  default: // O 'default' é como o 'else', executado se nenhum 'case' corresponder.
+    console.log("Permissão desconhecida.");
+}
+```
+</TabItem>
+</Tabs>
+
+## O Operador Ternário
+
+Para uma decisão `if/else` muito simples, especialmente quando você quer atribuir um valor a uma variável com base em uma condição, o operador ternário (`condição ? valor_se_true : valor_se_false`) é uma forma concisa e elegante.
+
+<Card title="Exemplo com Operador Ternário ">
+```javascript
+let idade = 20;
+
+let status = idade >= 18 ? "Adulto" : "Menor de idade";
+
+console.log(status); // Exibirá "Adulto"
+```
+Este código de uma linha é equivalente a:
+```javascript
+let status;
+if (idade >= 18) {
+  status = "Adulto";
+} else {
+  status = "Menor de idade";
+}
+```
+</Card>
+
+---
+
+Agora que nossos programas podem tomar decisões, o próximo passo é aprender a repetir tarefas. Vamos explorar as **Estruturas de Repetição**.
