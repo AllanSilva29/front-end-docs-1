@@ -1,0 +1,94 @@
+---
+title: 'HTML Semântico'
+description: 'Descubra o que é HTML semântico, por que ele é crucial para acessibilidade e SEO, e como usar as tags corretas para estruturar sua página.'
+---
+
+import { Aside, Card, CardGrid } from '@astrojs/starlight/components';
+
+No início da web, era comum construir layouts inteiros usando tabelas ou, mais tarde, um mar de elementos `<div>`. Um site poderia parecer visualmente correto, mas sua estrutura de código não tinha significado algum.
+
+```html
+<!-- O problema da "Div" -->
+<div id="header">...</div>
+<div id="nav">...</div>
+<div class="main-content">
+  <div class="article">...</div>
+</div>
+<div id="footer">...</div>
+```
+Este código não nos diz nada sobre o *propósito* de cada seção. Isso é um problema. A solução é o **HTML Semântico**.
+
+## O que é HTML Semântico?
+
+HTML semântico é a prática de usar tags HTML que **descrevem o significado e o propósito do conteúdo que elas envolvem**, em vez de apenas descrever sua aparência.
+
+Em vez de usar um `<div>` genérico para tudo, usamos tags como `<header>`, `<nav>`, `<main>` e `<article>`.
+
+## Por Que Usar HTML Semântico?
+
+Escrever código semântico traz três benefícios imensos, que vão muito além da organização do código.
+
+<CardGrid>
+	<Card title="♿👁️‍🗨️ Acessibilidade (a11y)">
+		Esta é a razão mais importante. **Leitores de tela**, usados por pessoas com deficiência visual, utilizam a semântica das tags para entender e navegar pela página. Um leitor de tela pode anunciar "navegação principal" ao encontrar uma tag `<nav>` ou permitir que o usuário pule diretamente para o `<main>`. Com `divs`, essa funcionalidade se perde.
+	</Card>
+	<Card title="🔍📈 SEO (Otimização para Motores de Busca)">
+		Motores de busca como o Google usam a estrutura semântica para entender a hierarquia e a importância do conteúdo da sua página. Um título dentro de uma tag `<h1>` tem mais peso do que um texto em negrito dentro de um `<span>`. Um bom uso da semântica pode melhorar seu ranking nos resultados de busca.
+	</Card>
+    <Card title="🛠️ Manutenibilidade">
+		O código se torna auto-documentado. Um novo desenvolvedor que olha para seu código entende imediatamente a função de cada bloco da página sem precisar decifrar nomes de classes ou IDs. `<nav>` é inequivocamente uma navegação. `<div class="nav-wrapper">` é mais ambíguo.
+	</Card>
+</CardGrid>
+
+## Principais Tags Semânticas de Layout
+
+O HTML5 introduziu uma série de tags para estruturar o layout de uma página de forma significativa.
+
+-   **`<header>`**: Representa o cabeçalho da página ou de uma seção. Geralmente contém o logotipo, o título do site e a navegação principal.
+-   **`<nav>`**: Usado para agrupar os principais links de navegação do site.
+-   **`<main>`**: Envolve o **conteúdo principal e único** da página. Deve haver apenas um `<main>` por página. É o destino do link "Pular para o conteúdo principal" para usuários de leitores de tela.
+-   **`<section>`**: Define uma seção temática independente no documento. Geralmente tem um cabeçalho (`<h2>`, `<h3>`, etc.) como filho.
+-   **`<article>`**: Representa um conteúdo autossuficiente e distribuível, como um post de blog, um artigo de notícias ou um comentário de fórum.
+-   **`<aside>`**: Usado para conteúdo secundário, que está tangencialmente relacionado ao conteúdo principal (como uma barra lateral com links relacionados ou uma biografia do autor).
+-   **`<footer>`**: O rodapé da página ou de uma seção. Geralmente contém informações de direitos autorais, links de contato e navegação secundária.
+
+### Antes e Depois
+
+<Aside type="note" title="Comparação de Código">
+Compare a clareza do código semântico com a versão não semântica.
+
+**Não Semântico:**
+```html
+<div id="header">
+  <h1>Meu Site</h1>
+</div>
+<div class="nav">
+  <ul>...</ul>
+</div>
+<div id="content">
+  <div class="post">
+    <h2>Título do Post</h2>
+  </div>
+</div>
+```
+
+**Semântico:**
+```html
+<header>
+  <h1>Meu Site</h1>
+</header>
+<nav>
+  <ul>...</ul>
+</nav>
+<main>
+  <article>
+    <h2>Título do Post</h2>
+  </article>
+</main>
+```
+</Aside>
+A versão semântica é muito mais explícita sobre o propósito de cada parte.
+
+---
+
+Com um esqueleto bem estruturado e significativo, podemos agora focar em elementos específicos de conteúdo, como **Listas e Links**.

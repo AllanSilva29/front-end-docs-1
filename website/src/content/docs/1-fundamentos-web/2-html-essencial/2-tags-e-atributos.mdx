@@ -1,0 +1,96 @@
+---
+title: 'Tags e Atributos'
+description: 'Aprenda sobre os blocos de construção fundamentais do HTML: as tags que estruturam o conteúdo e os atributos que as configuram.'
+---
+
+import { Aside, Card, CardGrid } from '@astrojs/starlight/components';
+
+O conteúdo de uma página HTML é construído com **elementos**, que são criados usando **tags**. As tags são como instruções que dizem ao navegador que tipo de conteúdo está sendo apresentado.
+
+## O Que São Tags?
+
+Uma tag geralmente consiste em um nome entre colchetes angulares, como `<p>`. A maioria das tags vem em pares:
+
+-   Uma **tag de abertura**: `<p>`
+-   O **conteúdo** do elemento: `Este é um parágrafo.`
+-   Uma **tag de fechamento**: `</p>`
+
+Juntos, eles formam um **elemento HTML**: `<p>Este é um parágrafo.</p>`
+
+Existem também **tags de fechamento automático** (ou "vazias"), que não precisam de uma tag de fechamento porque não envolvem um conteúdo. Um exemplo clássico é a tag de imagem `<img>` ou a de quebra de linha `<br>`.
+
+### Tags de Bloco vs. Tags de Linha
+
+Os elementos HTML geralmente se enquadram em duas categorias de exibição:
+
+<CardGrid>
+	<Card title="📦 Elementos de Bloco (`block`)">
+		Começam em uma nova linha e ocupam toda a largura disponível. Pense neles como os "parágrafos" da sua página.
+        - **Exemplos:** `<div>`, `<h1>` a `<h6>`, `<p>`, `<ul>`, `<li>`, `<form>`.
+	</Card>
+	<Card title="Elementos de Linha (`inline`) 🧵">
+		Não começam em uma nova linha e ocupam apenas a largura necessária para seu conteúdo. Eles fluem junto com o texto.
+        - **Exemplos:** `<span>`, `<a>`, `<strong>`, `<em>`, `<img>`.
+	</Card>
+</CardGrid>
+
+### Tags Essenciais de Texto
+
+<dl>
+  <dt><code>&lt;h1&gt;</code> a <code>&lt;h6&gt;</code></dt>
+  <dd>
+    Tags de cabeçalho (headings). `<h1>` é o mais importante e deve ser usado para o título principal da página. `<h2>` para subtítulos, e assim por diante. A hierarquia é crucial para SEO e acessibilidade.
+  </dd>
+  <dt><code>&lt;p&gt;</code></dt>
+  <dd>
+    A tag de parágrafo, usada para blocos de texto.
+  </dd>
+  <dt><code>&lt;strong&gt;</code> e <code>&lt;b&gt;</code></dt>
+  <dd>
+    Ambas deixam o texto em negrito. `<strong>` é semântico e indica que o texto tem grande importância. `<b>` é apenas estilístico. Prefira `<strong>`.
+  </dd>
+    <dt><code>&lt;em&gt;</code> e <code>&lt;i&gt;</code></dt>
+  <dd>
+    Ambas deixam o texto em itálico. `<em>` é semântico e dá ênfase ao texto. `<i>` é apenas estilístico. Prefira `<em>`.
+  </dd>
+</dl>
+
+## O Que São Atributos?
+
+**Atributos** fornecem informações adicionais sobre um elemento e são sempre especificados na tag de abertura. Eles geralmente vêm em pares de nome/valor, como `nome="valor"`.
+
+**Exemplo:**
+```html
+<a href="https://www.google.com">Este é um link para o Google</a>
+```
+-   A tag é `<a>` (âncora, para links).
+-   O atributo é `href` (hypertext reference).
+-   O valor do atributo é `"https://www.google.com"`.
+
+### Atributos Comuns
+
+-   **`id`**: Fornece um identificador **único** para um elemento na página.
+-   **`class`**: Atribui uma ou mais classes a um elemento. Múltiplos elementos podem ter a mesma classe. É a principal forma de selecionar elementos com CSS.
+-   **`src`**: Especifica a fonte (source) de um conteúdo, como em uma tag `<img>` ou `<script>`.
+-   **`href`**: Especifica o destino de um link em uma tag `<a>`.
+-   **`alt`**: Fornece um texto alternativo para uma imagem (`<img>`), que é exibido se a imagem não carregar e é lido por leitores de tela. **É crucial para a acessibilidade.**
+-   **`style`**: Permite aplicar estilos CSS diretamente no elemento (geralmente não recomendado, prefira folhas de estilo externas).
+
+**Exemplo Combinando Tags e Atributos:**
+
+```html
+<img 
+  src="/images/logo.png" 
+  alt="Logotipo da minha empresa" 
+  class="logo-header"
+  id="main-logo"
+/>
+```
+Este código cria um elemento de imagem que:
+1. Carrega o arquivo `logo.png` da pasta `images`.
+2. Mostra um texto alternativo se a imagem falhar.
+3. Pode ser estilizado via CSS usando a classe `logo-header` ou o ID `main-logo`.
+
+---
+
+Usar apenas tags como `<div>` e `<span>` funciona, mas podemos escrever um HTML muito mais poderoso e significativo. A seguir, exploraremos o conceito de **HTML Semântico**.

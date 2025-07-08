@@ -1,0 +1,62 @@
+---
+title: 'A Estrutura de uma Página HTML'
+description: 'Entenda a estrutura básica e os elementos essenciais que compõem todo e qualquer documento HTML na web.'
+---
+
+import { Aside, Card, CardGrid } from '@astrojs/starlight/components';
+
+Antes de construir interfaces complexas com React, precisamos entender o "esqueleto" sobre o qual elas são construídas. Esse esqueleto é o **HTML**.
+
+## O que é HTML?
+
+**HTML** significa **HyperText Markup Language** (Linguagem de Marcação de Hipertexto). Não é uma linguagem de programação, mas sim uma **linguagem de marcação**. Seu propósito é descrever a estrutura e o conteúdo de uma página web usando elementos chamados **tags**.
+
+Pense no HTML como a planta baixa de uma casa: ele define onde ficarão as paredes, as portas e as janelas (a estrutura), mas não define a cor da tinta ou o estilo dos móveis (a aparência, que é trabalho do CSS).
+
+## A Estrutura Mínima
+
+Todo documento HTML válido segue uma estrutura fundamental. Este é o "boilerplate" (modelo básico) que você usará como ponto de partida para qualquer página web.
+
+```html
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Título da Página</title>
+</head>
+<body>
+  <h1>Olá, Mundo!</h1>
+  <p>Este é o conteúdo visível da minha página.</p>
+</body>
+</html>
+```
+
+Vamos analisar cada parte:
+
+	### `<!DOCTYPE html>`
+		Esta é a primeira linha e é uma **declaração**, não uma tag. Ela informa ao navegador que o documento deve ser interpretado como HTML5, a versão moderna do HTML. Isso garante que a página seja renderizada de forma consistente.
+	### `<html>`
+		O elemento **raiz** de toda a página. Todos os outros elementos devem estar dentro dele. O atributo `lang="pt-br"` é importante para acessibilidade e SEO, indicando que o idioma principal da página é o português do Brasil.
+
+### A Cabeça: `<head>`
+
+A seção `<head>` contém **metadados** sobre a página — informações que não são exibidas diretamente no conteúdo principal, mas são importantes para o navegador e os motores de busca.
+
+-   **`<meta charset="UTF-8">`**: Define o conjunto de caracteres do documento. `UTF-8` é o padrão universal e permite o uso de acentos e caracteres especiais.
+-   **`<meta name="viewport" ...>`**: Uma meta tag crucial para o design responsivo. Ela instrui o navegador a ajustar a largura da página à largura da tela do dispositivo, com uma escala inicial de 100%.
+-   **`<title>`**: Define o título da página, que aparece na aba do navegador e nos resultados de busca do Google.
+
+<Aside type="note">
+Dentro do `<head>`, você também colocará links para seus arquivos CSS e, às vezes, scripts JavaScript.
+</Aside>
+
+### O Corpo: `<body>`
+
+A seção `<body>` contém **todo o conteúdo visível** da sua página web: textos, imagens, vídeos, links, formulários, etc. É aqui que você construirá a interface que seus usuários verão e com a qual interagirão.
+
+No nosso exemplo, o `<h1>` (cabeçalho de nível 1) e o `<p>` (parágrafo) estão dentro do `<body>`.
+
+---
+
+Compreender essa estrutura é o primeiro passo para criar qualquer site ou aplicação web. A seguir, vamos explorar mais a fundo os blocos de construção que vivem dentro do `<body>`: as **Tags e Atributos**.

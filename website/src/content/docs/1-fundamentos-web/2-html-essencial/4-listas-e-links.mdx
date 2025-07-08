@@ -1,0 +1,107 @@
+---
+title: 'Listas e Links'
+description: 'Aprenda a criar listas para agrupar conteúdo e links para conectar páginas, os dois pilares da navegação e organização na web.'
+---
+
+import { Aside, Card, CardGrid } from '@astrojs/starlight/components';
+
+A web é, em sua essência, uma coleção de documentos interligados. Os dois elementos que tornam essa estrutura possível são as **listas**, para organizar informações, e os **links**, para navegar entre elas.
+
+## Agrupando Conteúdo com Listas
+
+Listas são semanticamente importantes para agrupar itens relacionados. O HTML nos oferece dois tipos principais de listas.
+
+### Listas Não Ordenadas (`<ul>`)
+
+Use uma lista não ordenada quando a **ordem dos itens não importa**. O navegador, por padrão, exibe os itens com marcadores (bullets). É a escolha perfeita para barras de navegação, listas de recursos ou ingredientes.
+
+A estrutura consiste na tag `<ul>` (unordered list) envolvendo uma ou mais tags `<li>` (list item).
+
+```html
+<h3>Itens para comprar:</h3>
+<ul>
+  <li>Leite</li>
+  <li>Pão</li>
+  <li>Ovos</li>
+</ul>
+```
+
+### Listas Ordenadas (`<ol>`)
+
+Use uma lista ordenada quando a **sequência dos itens é importante**. O navegador, por padrão, numera os itens automaticamente. É ideal para rankings, tutoriais passo a passo ou receitas.
+
+A estrutura consiste na tag `<ol>` (ordered list) envolvendo as tags `<li>`.
+
+```html
+<h3>Como fazer café:</h3>
+<ol>
+  <li>Ferva a água.</li>
+  <li>Adicione o pó de café ao filtro.</li>
+  <li>Despeje a água quente sobre o pó.</li>
+</ol>
+```
+
+<Aside type="tip">
+Você pode aninhar listas dentro de outras para criar sub-itens e estruturas mais complexas. Basta colocar um novo `<ul>` ou `<ol>` dentro de um `<li>`.
+</Aside>
+
+## Conectando Páginas com Links
+
+A tag de **âncora** (`<a>`) é o que torna a web "hipertexto". Ela cria um link que o usuário pode clicar para navegar para outro documento ou para outra seção na mesma página.
+
+### A Anatomia de um Link
+
+O atributo mais importante da tag `<a>` é o `href` (hypertext reference), que especifica o destino do link.
+
+<CardGrid>
+	<Card title="🌍🔗 Links Externos">
+		Para vincular a um site diferente, use a URL completa (absoluta), incluindo o protocolo (`https://`).
+        ```html
+        <a href="https://www.google.com">
+          Ir para o Google
+        </a>
+        ```
+	</Card>
+	<Card title="🏠🔗 Links Internos">
+		Para vincular a outra página dentro do seu próprio site, use um caminho relativo.
+        ```html
+        <a href="/sobre.html">
+          Conheça nossa empresa
+        </a>
+        ```
+	</Card>
+</CardGrid>
+
+### Abrindo Links em uma Nova Aba
+
+Por padrão, os links abrem na mesma aba do navegador. Para forçar um link a abrir em uma nova aba, use o atributo `target="_blank"`.
+
+<Card title="⚠️ Aviso de Segurança: `rel_noopener noreferrer` 🛡️">
+Ao usar `target="_blank"`, é uma boa prática de segurança adicionar também o atributo `rel="noopener noreferrer"`.
+- `noopener`: Impede que a nova página tenha acesso ao objeto `window` da página original.
+- `noreferrer`: Impede que a nova página saiba de qual página o usuário veio.
+
+```html
+<a href="https://externo.com" target="_blank" rel="noopener noreferrer">
+  Site Externo (Seguro)
+</a>
+```
+</Card>
+
+### Links de Navegação
+
+A combinação de listas e links é a forma padrão de criar menus de navegação em um site, usando uma lista não ordenada (`<ul>`) de links (`<a>`).
+
+```html
+<nav>
+  <ul>
+    <li><a href="/">Página Inicial</a></li>
+    <li><a href="/produtos">Produtos</a></li>
+    <li><a href="/contato">Contato</a></li>
+  </ul>
+</nav>
+```
+
+---
+
+Agora que sabemos como organizar e conectar conteúdo, o próximo passo é aprender a coletar informações do usuário. Vamos explorar os elementos de **Formulários e Inputs**.

@@ -1,0 +1,111 @@
+---
+title: 'Formulários e Inputs'
+description: 'Aprenda a usar os elementos HTML essenciais para criar formulários e coletar dados dos usuários, a base para qualquer aplicação interativa.'
+---
+
+import { Aside, Card, CardGrid } from '@astrojs/starlight/components';
+
+Formulários são a principal maneira de coletar informações dos usuários em uma aplicação web. Seja para um login, uma pesquisa ou um formulário de contato, dominar os elementos de formulário é essencial.
+
+## A Tag `<form>`
+
+O elemento `<form>` atua como um contêiner para todos os controles de formulário. Ele tem atributos importantes que definem como os dados serão processados, embora em aplicações React, esse comportamento seja frequentemente controlado por JavaScript.
+
+-   `action`: A URL para onde os dados do formulário serão enviados.
+-   `method`: O método HTTP a ser usado (`GET` ou `POST`).
+
+## A Tag `<input>`: O Elemento Versátil
+
+O elemento `<input>` é o mais usado em formulários e sua funcionalidade muda drasticamente com base no seu atributo `type`.
+
+### Tipos Comuns de `<input>`
+
+<CardGrid>
+	<Card title="🔤🔒 Texto e Senha">
+		- `type="text"`: Um campo de texto de uma linha.
+        - `type="password"`: Semelhante ao `text`, mas mascara os caracteres digitados.
+        - `type="email"`: Para endereços de e-mail. Navegadores em dispositivos móveis podem exibir um teclado otimizado.
+        - `type="number"`: Para entrada de números, com controles de incremento/decremento.
+	</Card>
+	<Card title="☑️ Seleção">
+        - `type="checkbox"`: Permite que o usuário selecione zero ou mais opções de um conjunto.
+        - `type="radio"`: Permite que o usuário selecione apenas **uma** opção de um conjunto. Rádios com o mesmo atributo `name` pertencem ao mesmo grupo.
+	</Card>
+    <Card title="🖱️ Ações">
+		- `type="submit"`: Renderiza um botão que, quando clicado, envia os dados do formulário.
+        - `type="button"`: Renderiza um botão genérico, cujo comportamento é geralmente controlado por JavaScript.
+	</Card>
+</CardGrid>
+
+## A Importância da Tag `<label>`
+
+A tag `<label>` é crucial para a **acessibilidade**. Ela fornece um rótulo descritivo para um controle de formulário. Um `<label>` deve ser associado a um `<input>` de duas maneiras:
+
+1.  **Envolvendo o input:**
+    ```html
+    <label>
+      Nome de usuário:
+      <input type="text" name="username" />
+    </label>
+    ```
+
+2.  **Usando os atributos `for` e `id` (método preferido):**
+    ```html
+    <label for="username-input">Nome de usuário:</label>
+    <input type="text" id="username-input" name="username" />
+    ```
+O valor do atributo `for` no `<label>` deve corresponder exatamente ao valor do `id` no `<input>`.
+
+<Aside type="tip" title="Benefícios da Associação">
+- **Acessibilidade:** Leitores de tela anunciam o texto do `label` quando o usuário foca no `input`.
+- **Usabilidade:** Clicar no texto do `label` foca ou ativa o `input` correspondente, aumentando a área de clique.
+</Aside>
+
+## Outros Controles de Formulário
+
+Além do `<input>`, existem outros elementos úteis para coletar dados.
+
+-   **`<textarea>`**: Para entrada de texto de múltiplas linhas, como um campo de comentários.
+    ```html
+    <label for="comment">Comentário:</label>
+    <textarea id="comment" name="comment" rows="4" cols="50"></textarea>
+    ```
+
+-   **`<select>` e `<option>`**: Para criar uma lista suspensa (dropdown).
+    ```html
+    <label for="country">País:</label>
+    <select id="country" name="country">
+      <option value="br">Brasil</option>
+      <option value="pt">Portugal</option>
+      <option value="us">Estados Unidos</option>
+    </select>
+    ```
+
+## Exemplo de um Formulário de Contato
+
+Vamos juntar tudo em um formulário de contato simples e semântico.
+
+```html
+<form action="/submit-contact" method="post">
+  <h2>Entre em Contato</h2>
+  
+  <div>
+    <label for="name">Nome:</label>
+    <input type="text" id="name" name="user_name" required>
+  </div>
+  
+  <div>
+    <label for="email">E-mail:</label>
+    <input type="email" id="email" name="user_email" required>
+  </div>
+  
+  <div>
+    <label for="message">Sua Mensagem:</label>
+    <textarea id="message" name="user_message" required></textarea>
+  </div>
+  
+  <button type="submit">Enviar</button>
+</form>
+```
+
+
