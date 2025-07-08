@@ -1,0 +1,114 @@
+---
+title: 'Objetos: A Base de Tudo em JavaScript'
+description: 'Aprenda sobre objetos, a estrutura de dados fundamental em JavaScript usada para agrupar dados e funcionalidades relacionadas.'
+---
+
+import { Aside, Card, CardGrid, Tabs, TabItem } from '@astrojs/starlight/components';
+
+Se as variáveis são "caixas" para guardar valores únicos, os **objetos** são "armários" que nos permitem guardar uma coleção de dados e funcionalidades relacionadas sob um único nome. Praticamente tudo em JavaScript é, de alguma forma, um objeto.
+
+## O Que é um Objeto?
+
+Um objeto em JavaScript é uma coleção de **pares chave-valor**.
+
+-   **Chave (Key):** Um nome (uma string) que usamos para identificar um dado. Também chamada de **propriedade**.
+-   **Valor (Value):** O dado associado àquela chave. O valor pode ser de qualquer tipo: uma string, um número, um booleano, um array, ou até mesmo outro objeto.
+
+### Sintaxe Literal
+
+A forma mais comum de criar um objeto é usando a sintaxe literal, com chaves `{}`.
+
+```javascript
+const user = {
+  firstName: "Ana",
+  lastName: "Silva",
+  age: 28,
+  isLoggedIn: true,
+  "cor-favorita": "azul" // Chaves com caracteres especiais precisam de aspas
+};
+```
+Este objeto `user` agrupa várias informações sobre uma única entidade.
+
+## Acessando Propriedades
+
+Existem duas maneiras de acessar os valores dentro de um objeto.
+
+<Tabs>
+<TabItem label="Notação de Ponto (Dot Notation)">
+É a forma mais comum e legível. Você usa o nome do objeto, seguido de um ponto (`.`), e o nome da propriedade.
+
+```javascript
+console.log(user.firstName); // Saída: "Ana"
+console.log(user.age);       // Saída: 28
+```
+A notação de ponto **não funciona** se a chave da propriedade contiver espaços ou caracteres especiais.
+</TabItem>
+<TabItem label="Notação de Colchetes (Bracket Notation)">
+Nesta forma, você usa o nome do objeto, seguido por colchetes `[]` contendo uma string com o nome da propriedade.
+
+```javascript
+console.log(user['lastName']);      // Saída: "Silva"
+console.log(user['cor-favorita']); // Funciona com caracteres especiais
+```
+A grande vantagem da notação de colchetes é que a chave pode ser **dinâmica** (vir de uma variável).
+
+```javascript
+const keyToAccess = 'age';
+console.log(user[keyToAccess]); // Saída: 28
+```
+</TabItem>
+</Tabs>
+
+## Modificando e Adicionando Propriedades
+
+Você pode facilmente adicionar novas propriedades ou modificar as existentes usando uma atribuição.
+
+```javascript
+// Modificando uma propriedade existente
+user.age = 29;
+
+// Adicionando uma nova propriedade
+user.city = "São Paulo";
+
+console.log(user.age); // Saída: 29
+console.log(user.city); // Saída: "São Paulo"
+```
+
+## Objetos Aninhados e Métodos
+
+A complexidade dos objetos pode crescer.
+
+-   **Objetos Aninhados:** O valor de uma propriedade pode ser outro objeto.
+-   **Métodos:** Quando o valor de uma propriedade é uma **função**, chamamos isso de um método. Métodos definem o **comportamento** de um objeto.
+
+<Card title="Exemplo: Objeto Complexo">
+```javascript
+const car = {
+  brand: "Ford",
+  model: "Mustang",
+  year: 1969,
+  engine: { // Objeto aninhado
+    type: "V8",
+    horsepower: 335
+  },
+  start: function() { // Método
+    console.log("Ligando o motor " + this.engine.type + "...");
+  }
+};
+
+// Acessando propriedades aninhadas
+console.log(car.engine.horsepower); // Saída: 335
+
+// Chamando um método
+car.start(); // Saída: "Ligando o motor V8..."
+```
+<Aside type="note">
+A palavra-chave `this` dentro de um método se refere ao próprio objeto (`car`, neste caso), permitindo que o método acesse outras propriedades do mesmo objeto.
+</Aside>
+</Card>
+
+Objetos são a espinha dorsal de como estruturamos dados em JavaScript. Em React, o `state` e as `props` dos seus componentes são quase sempre objetos.
+
+---
+
+Se os objetos são para agrupar dados relacionados por nome, como fazemos para armazenar uma lista ordenada de itens? Para isso, usamos a segunda estrutura de dados mais importante: os **Arrays**.

@@ -1,0 +1,103 @@
+---
+title: 'Template Literals'
+description: 'Aprenda a usar Template Literals para criar strings de forma mais legível e poderosa, embutindo expressões e criando textos de múltiplas linhas.'
+---
+
+import { Aside, Card, CardGrid, Tabs, TabItem } from '@astrojs/starlight/components';
+
+**Template Literals** (ou Template Strings) são uma nova forma de criar strings em JavaScript, introduzida no ES6. Elas oferecem uma sintaxe muito mais poderosa e legível em comparação com a forma tradicional de concatenação de strings.
+
+## A Sintaxe: Crases (`` ` ``)
+
+Em vez de usar aspas simples (`' '`) ou duplas (`" "`), você usa **crases** (`` ` ``) para delimitar a string.
+
+```javascript
+const stringSimples = `Esta é uma template literal.`;
+```
+A princípio, parece apenas mais uma forma de criar uma string. Mas a verdadeira mágica está em seus dois principais recursos.
+
+## Recurso 1: Interpolação de Expressões
+
+Dentro de uma template literal, você pode embutir (interpolar) qualquer expressão JavaScript válida diretamente na string, envolvendo-a em `${expressão}`.
+
+Isso elimina a necessidade de concatenação desajeitada com o operador `+`.
+
+<Tabs>
+<TabItem label="O Jeito Antigo (Concatenação)">
+```javascript
+const user = { name: "Beatriz", age: 22 };
+
+const greeting = "Olá, meu nome é " + user.name + " e eu tenho " + user.age + " anos.";
+
+console.log(greeting);
+// Saída: Olá, meu nome é Beatriz e eu tenho 22 anos.
+```
+O código fica verboso, com muitas aspas e sinais de `+`, sendo fácil de cometer erros.
+</TabItem>
+<TabItem label="Com Template Literals">
+```javascript
+const user = { name: "Beatriz", age: 22 };
+
+const greeting = `Olá, meu nome é ${user.name} e eu tenho ${user.age} anos.`;
+
+console.log(greeting);
+// Saída: Olá, meu nome é Beatriz e eu tenho 22 anos.
+```
+O código é muito mais limpo e legível. Você pode colocar qualquer expressão válida dentro do `${...}`, como cálculos matemáticos ou chamadas de função.
+
+```javascript
+const preco = 10;
+const quantidade = 3;
+
+const totalMessage = `O total da compra é R$ ${preco * quantidade},00.`;
+console.log(totalMessage); // Saída: O total da compra é R$ 30,00.
+```
+</TabItem>
+</Tabs>
+
+## Recurso 2: Strings de Múltiplas Linhas
+
+Com as strings tradicionais, criar um texto que abrange várias linhas exigia o uso do caractere de escape `\n`. As template literals respeitam as quebras de linha que você insere diretamente no código.
+
+<Tabs>
+<TabItem label="O Jeito Antigo">
+```javascript
+const htmlString = '<div class="profile">\n' +
+                   '  <h2>Ana</h2>\n' +
+                   '</div>';
+```
+</TabItem>
+<TabItem label="Com Template Literals">
+```javascript
+const htmlString = `
+  <div class="profile">
+    <h2>Ana</h2>
+  </div>
+`;
+```
+Essa funcionalidade é especialmente útil para gerar blocos de HTML, mensagens de e-mail ou qualquer texto que precise de formatação de múltiplas linhas.
+</TabItem>
+</Tabs>
+
+<Card title="Uso em React">
+Template literals são extremamente úteis para construir nomes de classes dinâmicos ou para formatar textos que serão exibidos na sua UI.
+
+```jsx
+function UserAvatar({ user, size }) {
+  // Constrói o nome da classe dinamicamente
+  const className = `avatar avatar-${size}`; 
+
+  return (
+    <img
+      src={user.avatarUrl}
+      alt={`Avatar de ${user.name}`} // Formata o texto 'alt'
+      className={className}
+    />
+  );
+}
+```
+</Card>
+
+---
+
+Dominar o trabalho com strings é importante, mas o verdadeiro poder no desenvolvimento front-end moderno vem da manipulação de listas de dados. A seguir, vamos explorar os **Métodos de Array Essenciais**.

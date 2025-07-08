@@ -1,0 +1,104 @@
+---
+title: 'Módulos ES6: import e export'
+description: 'Aprenda a usar o sistema de módulos nativo do JavaScript (ES6) com import e export para organizar seu código em arquivos reutilizáveis.'
+---
+
+import { Aside, Card, CardGrid, Tabs, TabItem } from '@astrojs/starlight/components';
+
+À medida que uma aplicação cresce, é insustentável manter todo o código em um único arquivo. Precisamos de uma maneira de dividir nosso código em pedaços menores, lógicos e reutilizáveis. Essa prática é chamada de **modularização**, e o JavaScript moderno tem um sistema nativo para isso: os **Módulos ES6**.
+
+Um módulo é simplesmente um arquivo JavaScript. Por padrão, tudo dentro de um módulo é privado e só pode ser acessado por outros módulos se for explicitamente **exportado**.
+
+## `export`: Tornando o Código Disponível
+
+Existem duas maneiras principais de exportar código de um módulo.
+
+### 1. Named Exports (Exportações Nomeadas)
+
+Você pode exportar múltiplas variáveis, funções ou classes de um único arquivo prefixando suas declarações com a palavra-chave `export`.
+
+<Card title="utils.js">
+```javascript
+// Exportando uma constante
+export const PI = 3.14159;
+
+// Exportando uma função
+export function somar(a, b) {
+  return a + b;
+}
+
+// Exportando outra função
+export function subtrair(a, b) {
+  return a - b;
+}
+```
+</Card>
+
+### 2. Default Export (Exportação Padrão)
+
+Um módulo pode ter **apenas uma** exportação padrão. Ela é usada para a "coisa" principal que o módulo exporta, como um componente React.
+
+<Card title="MyComponent.jsx">
+```jsx
+function MyComponent() {
+  return <div>Meu Componente Principal</div>;
+}
+
+// A palavra-chave 'export default' indica a exportação padrão.
+export default MyComponent;
+
+// Você também pode exportar valores anônimos
+// export default () => <div>Componente Anônimo</div>;
+```
+</Card>
+
+<Aside type="note">
+É uma prática comum ter um `export default` para o componente principal e `export` nomeados para funções auxiliares ou constantes no mesmo arquivo.
+</Aside>
+
+## `import`: Usando o Código de Outros Módulos
+
+Para usar o código que foi exportado de outro módulo, usamos a palavra-chave `import`. A sintaxe varia dependendo do tipo de exportação.
+
+### Importando Named Exports
+
+Para importar exportações nomeadas, você usa chaves `{}` para especificar exatamente o que deseja importar pelo nome.
+
+<Card title="main.js">
+```javascript
+// Importando 'somar' e 'PI' do nosso arquivo utils.js
+import { somar, PI } from './utils.js';
+
+console.log(`O valor de PI é ${PI}`);
+const resultado = somar(5, 3); // 8
+```
+**Recursos Adicionais:**
+-   **Renomeando com `as`:** `import { somar as adicionar } from './utils.js';`
+-   **Importando tudo:** `import * as utils from './utils.js';` (cria um objeto `utils` com todas as exportações nomeadas).
+
+</Card>
+
+### Importando um Default Export
+
+Para importar uma exportação padrão, você simplesmente dá um nome a ela. Este nome não precisa corresponder ao nome original da função/variável no arquivo de origem.
+
+<Card title="App.jsx">
+```jsx
+// O nome 'MeuComponentePrincipal' é escolhido aqui, no momento da importação.
+import MeuComponentePrincipal from './MyComponent.jsx';
+
+function App() {
+  return <MeuComponentePrincipal />;
+}
+```
+</Card>
+
+### Combinando os Dois
+
+Você pode importar tanto o padrão quanto os nomeados na mesma linha.
+
+```javascript
+import ComponentePadrao, { exportacaoNomeada1, exportacaoNomeada2 } from './meu-arquivo.js';
+```
+
+O sistema de módulos ES6 é a espinha dorsal de como as aplicações React são estruturadas. Cada componente, cada hook customizado, cada utilitário vive em seu próprio módulo, sendo importado onde quer que seja necessário.

@@ -1,0 +1,150 @@
+---
+title: 'Objetos: Sintaxes Modernas (Shorthand)'
+description: 'Aprenda a usar sintaxes curtas (shorthand) do ES6 para criar e definir propriedades e métodos em objetos JavaScript de forma mais concisa.'
+---
+
+import { Aside, Card, CardGrid, Tabs, TabItem } from '@astrojs/starlight/components';
+
+O ES6 introduziu várias melhorias de "qualidade de vida" para a criação e manipulação de objetos. Essas sintaxes curtas (ou "shorthands") ajudam a reduzir a verbosidade e a tornar o código mais limpo.
+
+## Property Shorthand (Atalho de Propriedade)
+
+Este é o shorthand mais comum. Se você tem uma variável cujo nome é o mesmo que a chave da propriedade do objeto que você quer criar, você pode omitir a parte do valor.
+
+<Tabs>
+<TabItem label="O Jeito Antigo">
+```javascript
+const name = "Ana";
+const age = 30;
+
+const user = {
+  name: name,
+  age: age
+};
+
+console.log(user); // { name: "Ana", age: 30 }
+```
+</TabItem>
+<TabItem label="Com Property Shorthand">
+```javascript
+const name = "Ana";
+const age = 30;
+
+// Se a chave e a variável têm o mesmo nome, basta colocar a variável.
+const user = {
+  name,
+  age
+};
+
+console.log(user); // { name: "Ana", age: 30 }
+```
+</TabItem>
+</Tabs>
+
+Isso é extremamente útil ao construir objetos a partir de variáveis existentes, uma tarefa comum em qualquer aplicação.
+
+## Method Shorthand (Atalho de Método)
+
+Da mesma forma, ao definir uma função como uma propriedade de um objeto (um método), você pode omitir a palavra-chave `function` e os dois-pontos.
+
+<Tabs>
+<TabItem label="O Jeito Antigo">
+```javascript
+const calculator = {
+  add: function(a, b) {
+    return a + b;
+  },
+  subtract: function(a, b) {
+    return a - b;
+  }
+};
+```
+</TabItem>
+<TabItem label="Com Method Shorthand">
+```javascript
+const calculator = {
+  add(a, b) {
+    return a + b;
+  },
+  subtract(a, b) {
+    return a - b;
+  }
+};
+
+console.log(calculator.add(5, 3)); // 8
+```
+</TabItem>
+</Tabs>
+
+## Computed Property Names (Nomes de Propriedade Computados)
+
+Isso permite que você use uma expressão (como uma variável) para definir o nome de uma chave de propriedade dinamicamente, diretamente na criação do objeto.
+
+<Tabs>
+<TabItem label="O Jeito Antigo">
+```javascript
+const keyName = "favoriteFood";
+const person = {
+  name: "Carlos"
+};
+
+// A propriedade precisa ser adicionada depois da criação do objeto.
+person[keyName] = "Pizza";
+
+console.log(person); // { name: "Carlos", favoriteFood: "Pizza" }
+```
+</TabItem>
+<TabItem label="Com Nomes Computados">
+```javascript
+const keyName = "favoriteFood";
+
+const person = {
+  name: "Carlos",
+  // A expressão dentro dos colchetes [] é avaliada,
+  // e seu resultado se torna o nome da chave.
+  [keyName]: "Pizza"
+};
+
+console.log(person); // { name: "Carlos", favoriteFood: "Pizza" }
+```
+</TabItem>
+</Tabs>
+
+<Card title="🤝 Juntando Tudo">
+Podemos combinar todas essas sintaxes para criar objetos de forma muito expressiva.
+
+```javascript
+function createUser(name, age) {
+  const dynamicKey = `${name}_status`;
+
+  return {
+    name, // Property shorthand
+    age,  // Property shorthand
+    
+    [dynamicKey]: 'active', // Computed property name
+
+    greet() { // Method shorthand
+      return `Olá, meu nome é ${this.name}!`;
+    }
+  };
+}
+
+const newUser = createUser('Davi', 25);
+console.log(newUser);
+/*
+{
+  name: 'Davi',
+  age: 25,
+  Davi_status: 'active',
+  greet: [Function: greet]
+}
+*/
+console.log(newUser.greet()); // Olá, meu nome é Davi!
+```
+</Card>
+
+Essas sintaxes podem parecer pequenas, mas seu uso consistente em uma base de código resulta em um software significativamente mais legível e fácil de manter.
+
+---
+
+Até agora, todo o nosso código foi síncrono, executando uma instrução após a outra. Mas como lidamos com operações que levam tempo, como buscar dados de um servidor? A seguir, vamos explorar o mundo assíncrono com **Promises e async/await**.

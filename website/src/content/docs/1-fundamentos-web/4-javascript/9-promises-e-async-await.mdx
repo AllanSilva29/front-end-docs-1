@@ -1,0 +1,91 @@
+---
+title: 'Promises e async/await'
+description: 'Entenda como o JavaScript lida com operações assíncronas usando Promises e a sintaxe async/await para escrever código limpo e legível.'
+---
+
+import { Aside, Card, CardGrid, Tabs, TabItem } from '@astrojs/starlight/components';
+
+JavaScript, por natureza, é uma linguagem de _thread_ única, o que significa que ela só pode fazer uma coisa de cada vez. Se uma tarefa demorada (como baixar um arquivo grande ou fazer uma requisição a uma API) bloqueasse essa _thread_, toda a página congelaria.
+
+Para evitar isso, JavaScript usa um modelo **assíncrono**. Operações demoradas são iniciadas, e o código continua a ser executado. Quando a operação termina, o resultado é tratado. A forma moderna de gerenciar esse fluxo é com **Promises**.
+
+## O Que é uma Promise?
+
+Uma **Promise** (Promessa) é um objeto que representa a eventual conclusão (ou falha) de uma operação assíncrona. Pense nela como um "recibo" que você ganha ao fazer um pedido: você não tem o produto ainda, mas tem a promessa de que ele chegará.
+
+Uma Promise pode estar em um de três estados:
+
+1.  **Pending (Pendente):** O estado inicial. A operação ainda não foi concluída.
+2.  **Fulfilled (Realizada):** A operação foi concluída com sucesso. A promessa tem um valor resultante.
+3.  **Rejected (Rejeitada):** A operação falhou. A promessa tem um motivo (um erro).
+
+## Consumindo Promises com `.then()` e `.catch()`
+
+A forma clássica de interagir com uma Promise é encadeando os métodos `.then()` e `.catch()`.
+
+-   `.then(onFulfilled)`: Registra uma função de callback para ser executada quando a Promise for **realizada**. Essa função recebe o valor resultante da promessa.
+-   `.catch(onRejected)`: Registra um callback para ser executado quando a Promise for **rejeitada**. Essa função recebe o erro.
+
+<Card title="Exemplo com `fetch`">
+A API `fetch` do navegador é um exemplo perfeito de uma função que retorna uma Promise.
+
+```javascript
+// fetch retorna uma Promise que resolve com um objeto Response
+fetch('https://api.github.com/users/octocat')
+  .then(response => {
+    // response.json() também retorna uma Promise que resolve com os dados em JSON
+    if (!response.ok) {
+      throw new Error('A requisição falhou!');
+    }
+    return response.json();
+  })
+  .then(data => {
+    // Este .then() lida com o resultado da Promise de response.json()
+    console.log(data.name); // "The Octocat"
+    console.log(data.bio);  // "GitHub's mascot"
+  })
+  .catch(error => {
+    // O .catch() pega qualquer erro que ocorrer em qualquer ponto da cadeia
+    console.error("Ocorreu um erro:", error);
+  });
+```
+</Card>
+
+## `async/await`: A Sintaxe Moderna
+
+Embora `.then()` e `.catch()` funcionem, encadear muitos deles pode tornar o código difícil de ler (o "callback hell"). O ES2017 introduziu a sintaxe `async/await` para simplificar drasticamente o trabalho com Promises.
+
+`async/await` é um "açúcar sintático" em cima de Promises. Ele nos permite escrever código assíncrono que **parece e se comporta como código síncrono**.
+
+-   **`async`**: A palavra-chave `async` é colocada antes de uma função para indicar que ela retornará uma Promise.
+-   **`await`**: A palavra-chave `await` só pode ser usada **dentro de uma função `async`**. Ela "pausa" a execução da função até que a Promise à sua frente seja resolvida, e então retorna o valor resolvido.
+
+<Tabs>
+<TabItem label="O Jeito `async/await`">
+```javascript
+// 1. Declaramos a função como 'async'
+async function fetchGitHubUser() {
+  try { // 3. Usamos try...catch para tratar erros
+    // 2. Usamos 'await' para pausar a execução até a Promise ser resolvida
+    const response = await fetch('https://api.github.com/users/octocat');
+
+    if (!response.ok) {
+      throw new Error('A requisição falhou!');
+    }
+
+    const data = await response.json(); // Pausa novamente para o .json()
+
+    console.log(data.name);
+    console.log(data.bio);
+
+  } catch (error) {
+    console.error("Ocorreu um erro:", error);
+  }
+}
+
+fetchGitHubUser();
+```
+</TabItem>
+</Tabs>
+
+O código `async/await` é muito mais limpo, linear e fácil de depurar. Em código React moderno, especialmente dentro de um `useEffect`, esta é a abordagem preferida para lidar com chamadas de API e outras operações assíncronas.

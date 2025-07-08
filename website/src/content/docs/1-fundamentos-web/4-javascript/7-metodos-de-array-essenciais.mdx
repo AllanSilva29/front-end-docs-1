@@ -1,0 +1,123 @@
+---
+title: 'Métodos de Array Essenciais'
+description: 'Domine os métodos de array .map(), .filter(), .find() e .reduce(), as ferramentas funcionais mais importantes para transformar e manipular dados em React.'
+---
+
+import { Aside, Card, CardGrid } from '@astrojs/starlight/components';
+
+Enquanto métodos como `.push()` e `.pop()` **mutam** o array original, a programação funcional e o React favorecem a **imutabilidade**. Felizmente, o JavaScript oferece um conjunto poderoso de métodos de array que não alteram o array original, mas sim retornam um **novo array** ou um novo valor.
+
+Dominar `.map()`, `.filter()`, `.find()` e `.reduce()` é essencial para escrever código React limpo e declarativo.
+
+## `.map()`: Transformando Dados
+
+O método `.map()` é, de longe, o mais importante para o desenvolvimento em React. Ele cria um **novo array** com os resultados da chamada de uma função de callback para cada elemento do array original.
+
+Pense nele como uma "linha de produção": entra uma matéria-prima (um item do array), a função faz algo com ela, e sai um produto acabado (um novo item).
+
+**Uso principal em React:** Transformar um array de dados em um array de elementos JSX para renderizar uma lista.
+
+<Card title="Ex: Renderizando uma Lista de Usuários 👤">
+```jsx
+const users = [
+  { id: 1, name: 'Ana Carolina' },
+  { id: 2, name: 'Bruno Alves' },
+  { id: 3, name: 'Carla Dias' },
+];
+
+function UserList() {
+  return (
+    <ul>
+      {/* Para cada 'user' no array, o .map retorna um elemento <li> */}
+      {users.map(user => (
+        <li key={user.id}>
+          {user.name}
+        </li>
+      ))}
+    </ul>
+  );
+}
+```
+</Card>
+
+## `.filter()`: Selecionando Dados
+
+O método `.filter()` cria um **novo array** com todos os elementos que passaram no teste implementado pela função de callback. A função de callback deve retornar `true` para manter o elemento ou `false` para descartá-lo.
+
+**Uso principal:** Criar uma lista filtrada com base em uma busca ou em uma condição.
+
+```javascript
+const products = [
+  { id: 1, name: 'Laptop', category: 'Eletrônicos', price: 5000 },
+  { id: 2, name: 'Mouse', category: 'Eletrônicos', price: 150 },
+  { id: 3, name: 'Cadeira', category: 'Móveis', price: 800 },
+];
+
+// Filtra apenas os produtos da categoria 'Eletrônicos'
+const electronics = products.filter(product => product.category === 'Eletrônicos');
+
+console.log(electronics);
+// Saída: [{ id: 1, ... }, { id: 2, ... }]
+```
+
+## `.find()`: Encontrando um Único Item
+
+O método `.find()` retorna o **valor do primeiro elemento** do array que satisfaz a função de callback. Se nenhum elemento for encontrado, ele retorna `undefined`.
+
+**Uso principal:** Selecionar um item específico de uma lista, por exemplo, com base em um ID da URL.
+
+```javascript
+const users = [
+  { id: 'abc', name: 'Ana' },
+  { id: 'def', name: 'Bruno' },
+  { id: 'ghi', name: 'Carla' },
+];
+
+const userIdToFind = 'def';
+const foundUser = users.find(user => user.id === userIdToFind);
+
+console.log(foundUser);
+// Saída: { id: 'def', name: 'Bruno' }
+```
+<Aside>
+**Diferença entre `.filter()` e `.find()`:**
+- `.filter()` sempre retorna um **array** (que pode estar vazio).
+- `.find()` retorna o **próprio elemento** (ou `undefined`).
+</Aside>
+
+## `.reduce()`: Agregando Dados
+
+O método `.reduce()` é o mais poderoso, mas também o mais complexo. Ele executa uma função "redutora" para cada elemento do array, resultando em um **único valor de saída**.
+
+Pense nele como "reduzir" uma lista de itens a uma única coisa, como a soma de todos os valores.
+
+A função de callback do `.reduce()` recebe dois argumentos principais:
+1.  **Acumulador:** O valor retornado da iteração anterior.
+2.  **Valor Atual:** O elemento atual sendo processado no array.
+
+O `.reduce()` também aceita um segundo argumento opcional: o **valor inicial** do acumulador.
+
+**Uso principal:** Calcular totais, agrupar dados ou realizar transformações complexas.
+
+<Card title="Ex: Calculando o Total de um Carrinho de Compras 🛒">
+```javascript
+const cartItems = [
+  { name: 'Laptop', price: 5000, quantity: 1 },
+  { name: 'Mouse', price: 150, quantity: 2 },
+  { name: 'Teclado', price: 300, quantity: 1 },
+];
+
+// O valor inicial do acumulador (total) é 0.
+const totalCost = cartItems.reduce((total, item) => {
+  return total + (item.price * item.quantity);
+}, 0);
+
+console.log(totalCost); // Saída: 5600
+```
+</Card>
+
+Esses métodos são a base da manipulação de dados de forma funcional em JavaScript e são indispensáveis para escrever código React eficiente e declarativo.
+
+---
+
+Agora que dominamos a manipulação de arrays, vamos ver algumas sintaxes curtas e úteis para trabalhar com **Objetos**.

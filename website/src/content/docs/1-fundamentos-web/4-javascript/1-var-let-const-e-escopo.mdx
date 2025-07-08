@@ -1,0 +1,90 @@
+---
+title: 'var, let, const e Escopo'
+description: 'Entenda a diferença entre var, let e const, e aprenda sobre o conceito de escopo de bloco, fundamental para o JavaScript.'
+---
+
+import { Aside, Card, CardGrid } from '@astrojs/starlight/components';
+
+No JavaScript "clássico", a única maneira de declarar uma variável era com a palavra-chave `var`. No entanto, o `var` tem algumas peculiaridades de comportamento que podem levar a bugs difíceis de rastrear. O JavaScript (ES6+) introduziu `let` e `const` para resolver esses problemas.
+
+## O Problema com `var`
+
+`var` tem duas características problemáticas:
+
+1.  **Escopo de Função:** Uma variável declarada com `var` é "visível" em toda a função onde foi declarada, não importando o bloco (`{...}`) em que se encontra.
+2.  **Hoisting (Içamento):** As declarações de `var` são "movidas" para o topo de seu escopo durante a fase de compilação. Isso significa que você pode usar uma variável antes de sua declaração sem causar um erro (ela terá o valor `undefined`).
+
+```javascript
+function testeComVar() {
+  console.log(minhaVar); // Saída: undefined (não um erro!) - Hoisting
+  
+  if (true) {
+    var minhaVar = "Olá";
+  }
+
+  console.log(minhaVar); // Saída: "Olá" - Escopo vaza para fora do if
+}
+```
+Esse comportamento é contraintuitivo e pode mascarar erros. Por isso, a recomendação moderna é: **evite usar `var`**.
+
+## `let`: Variáveis de Escopo de Bloco
+
+`let` foi introduzido para criar variáveis que se comportam de forma mais previsível.
+
+-   **Escopo de Bloco:** Uma variável `let` só é acessível dentro do bloco (`{...}`) em que foi declarada (seja um `if`, `for`, ou apenas um bloco de chaves).
+-   **Não sofre hoisting:** Tentar acessar uma variável `let` antes de sua declaração resulta em um `ReferenceError`.
+
+```javascript
+function testeComLet() {
+  // console.log(minhaLet); // ERRO: Cannot access 'minhaLet' before initialization
+
+  if (true) {
+    let minhaLet = "Olá";
+    console.log(minhaLet); // Saída: "Olá"
+  }
+
+  // console.log(minhaLet); // ERRO: minhaLet is not defined
+}
+```
+Isso torna o código muito mais seguro e fácil de entender. Você pode reatribuir um novo valor a uma variável `let`:
+
+```javascript
+let contador = 0;
+contador = 1; // Válido
+```
+
+## `const`: Constantes de Escopo de Bloco
+
+`const` é muito semelhante ao `let` (tem escopo de bloco e não sofre hoisting), mas com uma regra crucial: uma variável `const` **não pode ser reatribuída** após sua inicialização.
+
+```javascript
+const PI = 3.14159;
+// PI = 3.14; // ERRO: Assignment to constant variable.
+
+const usuario = { nome: "Ana" };
+// usuario = { nome: "Bia" }; // ERRO: Não pode reatribuir o objeto inteiro.
+```
+
+<Card title="❗ `const` não significa Imutabilidade Total">
+É importante entender que `const` protege a **atribuição**, não o **valor**. Se o valor for um objeto ou um array, você ainda pode **modificar as propriedades ou os elementos internos** desse objeto ou array.
+
+```javascript
+const usuario = { nome: "Ana" };
+usuario.nome = "Ana Silva"; // VÁLIDO! Estamos modificando uma propriedade, não reatribuindo a variável.
+
+const numeros = [1, 2, 3];
+numeros.push(4); // VÁLIDO!
+```
+</Card>
+
+## Qual Usar? `let` ou `const`?
+
+A melhor prática na comunidade JavaScript é:
+
+> **Use `const` por padrão. Mude para `let` somente quando você souber que precisará reatribuir a variável.**
+
+Essa abordagem torna seu código mais previsível. Ao ver um `const`, você sabe que aquela referência nunca mudará. Isso ajuda a prevenir modificações acidentais de variáveis que deveriam ser constantes.
+
+---
+
+Agora que sabemos como declarar variáveis de forma segura e previsível, experimente explorar a estrutura de dados mais fundamental do JavaScript, usada para representar praticamente tudo: os [Objetos](/front-end-docs-1/1-fundamentos-web/4-javascript/2-objetos-a-base-de-tudo).

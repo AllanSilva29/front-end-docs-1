@@ -1,0 +1,115 @@
+---
+title: 'Arrays: Listas de Dados'
+description: 'Aprenda a usar arrays para armazenar e manipular listas ordenadas de dados em JavaScript, uma estrutura essencial para renderizar listas em React.'
+---
+
+import { Aside, Card, CardGrid } from '@astrojs/starlight/components';
+
+Enquanto os [objetos](/front-end-docs-1/1-fundamentos-web/4-javascript/2-objetos-a-base-de-tudo/) são coleções de pares chave-valor, os **arrays** (ou vetores) são coleções **ordenadas** de valores. Pense neles como uma lista de compras ou uma fila de pessoas.
+
+## O Que é um Array?
+
+Um array é um tipo especial de objeto em JavaScript, onde as "chaves" são índices numéricos não negativos, e os valores podem ser de qualquer tipo (números, strings, booleanos, outros objetos, etc.).
+
+### Sintaxe Literal
+
+A forma mais comum de criar um array é usando a sintaxe literal, com colchetes `[]`.
+
+```javascript
+// Um array de strings
+const frutas = ["Maçã", "Banana", "Morango"];
+
+// Um array de números
+const numerosDaSorte = [7, 13, 21, 42];
+
+// Um array com tipos de dados mistos
+const misturado = ["Texto", 10, true, { id: 1 }];
+```
+
+## Acessando Elementos por Índice
+
+Os elementos em um array são acessados por seu **índice** — sua posição na lista. É importante lembrar que a contagem de índices em programação quase sempre começa em **zero**.
+
+-   O primeiro elemento está no índice `0`.
+-   O segundo elemento está no índice `1`.
+-   E assim por diante...
+
+```javascript
+const cores = ["Vermelho", "Verde", "Azul"];
+
+console.log(cores[0]); // Saída: "Vermelho"
+console.log(cores[1]); // Saída: "Verde"
+console.log(cores[2]); // Saída: "Azul"
+
+// Modificando um elemento
+cores[1] = "Amarelo";
+console.log(cores); // Saída: ["Vermelho", "Amarelo", "Azul"]
+```
+
+## A Propriedade `.length`
+
+Todo array tem uma propriedade `.length` que informa quantos elementos ele contém.
+
+```javascript
+const nomes = ["Ana", "Bia", "Carlos"];
+console.log(nomes.length); // Saída: 3
+
+// Acessando o último elemento de forma dinâmica
+const ultimoNome = nomes[nomes.length - 1];
+console.log(ultimoNome); // Saída: "Carlos"
+```
+
+## Métodos Básicos de Mutação
+
+Arrays vêm com muitos métodos úteis para manipular seus dados. Alguns dos mais básicos **mutam** (modificam) o array original.
+
+<CardGrid>
+	<Card title="push() ➕📥">
+		Adiciona um ou mais elementos ao **final** do array.
+        ```js
+        const letras = ['a', 'b'];
+        letras.push('c');
+        // letras agora é ['a', 'b', 'c']
+        ```
+	</Card>
+	<Card title="pop() ➖📤">
+		Remove o **último** elemento do array e o retorna.
+        ```js
+        const letras = ['a', 'b', 'c'];
+        letras.pop();
+        // letras agora é ['a', 'b']
+        ```
+	</Card>
+    <Card title="unshift() ⬅️📥">
+		Adiciona um ou mais elementos no **início** do array.
+        ```js
+        const letras = ['b', 'c'];
+        letras.unshift('a');
+        // letras agora é ['a', 'b', 'c']
+        ```
+	</Card>
+    <Card title="shift() ➡️📤">
+		Remove o **primeiro** elemento do array e o retorna.
+        ```js
+        const letras = ['a', 'b', 'c'];
+        letras.shift();
+        // letras agora é ['b', 'c']
+        ```
+	</Card>
+</CardGrid>
+
+<Card title="🔒 Imutabilidade em React">
+Em React, uma das regras principais é a **imutabilidade**. Você deve evitar mutar o estado diretamente. Portanto, métodos como `.push()` e `.pop()` são geralmente evitados ao trabalhar com estado.
+
+Em vez disso, você criará um **novo array** com as alterações desejadas.
+
+```javascript
+// O jeito React de adicionar um item
+const novoArray = [...arrayAntigo, novoItem];
+```
+Veremos mais sobre isso nos tópicos de **Desestruturação e Spread** e **Métodos de Array Essenciais**.
+</Card>
+
+---
+
+Com um bom entendimento de objetos e arrays, estamos prontos para explorar as sintaxes modernas do JavaScript que tornam o trabalho com essas estruturas de dados muito mais agradável e conciso, começando pelas **Arrow Functions**.

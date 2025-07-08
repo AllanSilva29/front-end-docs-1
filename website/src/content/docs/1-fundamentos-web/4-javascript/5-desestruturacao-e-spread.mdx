@@ -1,0 +1,124 @@
+---
+title: 'Desestruturação e Spread'
+description: 'Domine a desestruturação para extrair dados de objetos e arrays, e o operador spread para expandi-los, duas das sintaxes mais úteis no JavaScript moderno.'
+---
+
+import { Aside, Card, CardGrid, Tabs, TabItem } from '@astrojs/starlight/components';
+
+**Desestruturação** (Destructuring) e o **Operador Spread** (`...`) são duas features do ES6 que transformaram a maneira como interagimos com objetos e arrays em JavaScript. Elas nos permitem escrever um código mais limpo, conciso e expressivo.
+
+## Desestruturação: Extraindo Valores
+
+Desestruturação é uma sintaxe que permite "desempacotar" valores de arrays ou propriedades de objetos em variáveis distintas.
+
+### Desestruturação de Objetos
+
+Isso permite extrair propriedades de um objeto e atribuí-las a variáveis com o mesmo nome. É extremamente útil para acessar `props` em componentes React.
+
+<Tabs>
+<TabItem label="O Jeito Antigo">
+```javascript
+const user = {
+  name: "Carlos",
+  age: 35,
+  city: "Rio de Janeiro"
+};
+
+const name = user.name;
+const age = user.age;
+
+console.log(`${name} tem ${age} anos.`);
+```
+</TabItem>
+<TabItem label="Com Desestruturação">
+```javascript
+const user = {
+  name: "Carlos",
+  age: 35,
+  city: "Rio de Janeiro"
+};
+
+const { name, age } = user; // Extrai 'name' e 'age' em variáveis
+
+console.log(`${name} tem ${age} anos.`);
+```
+</TabItem>
+</Tabs>
+
+<Card title="Recursos Avançados" icon="star">
+- **Renomeando variáveis:** `const { name: userName, age } = user;` (cria uma variável `userName`)
+- **Valores padrão:** `const { name, country = "Brasil" } = user;` (se `country` não existir no objeto, o padrão é usado)
+- **Em parâmetros de função:** `function Greet({ name }) { return <p>Olá, {name}!</p> }` (muito comum em React)
+</Card>
+
+### Desestruturação de Arrays
+
+Funciona de forma semelhante, mas extrai valores com base em sua **posição** no array. É a sintaxe que torna o hook `useState` possível.
+
+```javascript
+const colors = ["Vermelho", "Verde", "Azul"];
+
+const [firstColor, secondColor] = colors;
+
+console.log(firstColor);  // "Vermelho"
+console.log(secondColor); // "Verde"
+```
+<Aside type="note">
+O hook `useState` retorna um array com dois elementos: `[valor, funcaoDeAtualizacao]`. Usamos a desestruturação de array para dar nomes a eles: `const [count, setCount] = useState(0);`.
+</Aside>
+
+## Operador Spread (`...`): Expandindo Valores
+
+O operador spread (`...`) faz o oposto da desestruturação. Ele "espalha" os elementos de um iterável (como um array ou objeto) em outro lugar.
+
+### Spread em Arrays
+
+É a maneira moderna e imutável de criar novos arrays baseados em existentes.
+
+-   **Copiar um array:** `const copyOfColors = [...colors];`
+-   **Combinar arrays:** `const moreColors = [...colors, "Amarelo", "Roxo"];`
+-   **Adicionar no início:** `const moreColors = ["Branco", ...colors];`
+
+### Spread em Objetos
+
+É a ferramenta fundamental para **atualizar o estado de forma imutável** em React. Você cria uma cópia de um objeto, espalhando suas propriedades antigas e, em seguida, sobrescrevendo ou adicionando as novas.
+
+<Tabs>
+<TabItem label="O Jeito Antigo (Object.assign)">
+```javascript
+const user = { name: "Ana", age: 25 };
+const updatedUser = Object.assign({}, user, { age: 26, city: "Lisboa" });
+```
+</TabItem>
+<TabItem label="Com Spread">
+```javascript
+const user = { name: "Ana", age: 25 };
+
+// Cria uma cópia com a idade atualizada e uma nova cidade
+const updatedUser = { ...user, age: 26, city: "Lisboa" };
+
+console.log(updatedUser);
+// { name: "Ana", age: 26, city: "Lisboa" }
+```
+A ordem importa: propriedades definidas *após* o spread irão sobrescrever as originais.
+</TabItem>
+</Tabs>
+
+### Parâmetros Rest
+
+A sintaxe `...` também pode ser usada em parâmetros de função para agrupar o "resto" dos argumentos em um array. Isso é chamado de **parâmetros rest**.
+
+```javascript
+function somar(...numeros) {
+  // 'numeros' será um array com todos os argumentos passados
+  return numeros.reduce((total, num) => total + num, 0);
+}
+
+somar(1, 2, 3);       // Retorna 6
+somar(10, 20, 30, 40); // Retorna 100
+```
+Isso é útil para criar funções que aceitam um número variável de argumentos.
+
+---
+
+Com a capacidade de manipular strings e criar "templates" dinâmicos, vamos explorar os **Template Literals**.

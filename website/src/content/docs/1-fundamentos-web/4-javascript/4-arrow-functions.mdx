@@ -1,0 +1,102 @@
+---
+title: 'Arrow Functions'
+description: 'Aprenda a sintaxe concisa e os benefícios das Arrow Functions, a forma moderna de escrever funções em JavaScript.'
+---
+
+import { Aside, Card, CardGrid, Tabs, TabItem } from '@astrojs/starlight/components';
+
+As **Arrow Functions** (Funções de Seta) foram introduzidas no ES6 e oferecem uma sintaxe mais curta e limpa para escrever funções em JavaScript. Elas rapidamente se tornaram a forma preferida de escrever funções de callback e outras funções anônimas, sendo onipresentes em código React moderno.
+
+## A Evolução da Sintaxe
+
+Vamos ver como uma função tradicional pode ser transformada em uma arrow function passo a passo.
+
+<Tabs>
+<TabItem label="Função Tradicional">
+A forma clássica de declarar uma função, usando a palavra-chave `function`.
+
+```javascript
+function somar(a, b) {
+  return a + b;
+}
+
+// ou como uma expressão de função
+const somar = function(a, b) {
+  return a + b;
+};
+```
+</TabItem>
+<TabItem label="Arrow Function Básica">
+Substituímos a palavra-chave `function` por uma "seta" (`=>`) após os parâmetros.
+
+```javascript
+const somar = (a, b) => {
+  return a + b;
+};
+```
+</TabItem>
+</Tabs>
+
+### Recursos de Sintaxe Curta
+
+As arrow functions se tornam ainda mais simples com algumas regras.
+
+
+##### ↩️ Retorno Implícito
+    Se a sua função tem **apenas uma linha** e essa linha é uma declaração de `return`, você pode remover as chaves `{}` e a palavra `return`. O valor será retornado implicitamente.
+    ```js
+    // Antes
+    const dobrar = (numero) => {
+        return numero * 2;
+    };
+
+    // Com retorno implícito
+    const dobrar = (numero) => numero * 2;
+    ```
+
+##### ❓() Parênteses Opcionais
+    Se a sua função tem **exatamente um parâmetro**, você pode omitir os parênteses ao redor dele.
+    ```js
+    // Antes
+    const saudar = (nome) => `Olá, ${nome}!`;
+
+    // Com parênteses opcionais
+    const saudar = nome => `Olá, ${nome}!`;
+    ```
+    **Atenção:** Se a função não tiver parâmetros ou tiver mais de um, os parênteses `()` são obrigatórios.
+
+
+<Card title="Exemplo em React">
+Você verá arrow functions por toda parte em código React, especialmente ao usar métodos de array como `.map()` para renderizar listas.
+
+```jsx
+const usuarios = [{id: 1, nome: 'Ana'}, {id: 2, nome: 'Bia'}];
+
+function ListaDeUsuarios() {
+  return (
+    <ul>
+      {/* A função passada para o .map é uma arrow function com retorno implícito */}
+      {usuarios.map(usuario => (
+        <li key={usuario.id}>{usuario.nome}</li>
+      ))}
+    </ul>
+  );
+}
+```
+<Aside type="note">
+Ao retornar JSX em uma linha, é comum envolvê-lo em parênteses `()` para evitar problemas com a inserção automática de ponto e vírgula do JavaScript.
+</Aside>
+</Card>
+
+## A Grande Diferença: O Comportamento do `this`
+
+Além da sintaxe, a maior diferença entre funções tradicionais e arrow functions é como elas lidam com a palavra-chave `this`.
+
+-   **Funções Tradicionais:** O valor de `this` é **dinâmico**. Ele depende de *como* a função é chamada (pode ser o objeto global, o objeto que a chamou, `undefined`, etc.). Isso era uma fonte comum de bugs, especialmente com callbacks.
+-   **Arrow Functions:** Elas **não têm seu próprio `this`**. Em vez disso, elas herdam (ou "capturam") o valor de `this` do seu **contexto pai** (o escopo onde foram criadas). Isso é chamado de `this` léxico.
+
+Esse comportamento simplifica muito as coisas, especialmente em componentes de classe do React (um padrão mais antigo) ou em qualquer situação que envolva callbacks que precisam acessar o `this` do contexto externo. No React moderno, com Hooks, a necessidade de se preocupar com o `this` diminuiu drasticamente, mas a sintaxe limpa e concisa das arrow functions continua sendo sua maior vantagem.
+
+---
+
+As arrow functions são frequentemente usadas em conjunto com outras features do ES6 para escrever código mais expressivo. A seguir, vamos explorar duas das mais usadas: **Desestruturação e Spread**.
