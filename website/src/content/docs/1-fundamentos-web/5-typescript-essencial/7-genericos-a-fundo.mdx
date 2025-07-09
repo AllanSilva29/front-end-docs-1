@@ -55,6 +55,27 @@ Vamos quebrar `function getLastItem<T>(items: T[]): T | undefined`.
 O TypeScript conecta tudo: o tipo do array de entrada determina o tipo do item de saída.
 </Aside>
 
+Outro exemplo:
+
+```ts
+function identidade<T>(valor: T): T {
+  return valor;
+}
+
+// Aqui, estamos passando explicitamente o tipo como string
+const nome = identidade<string>('Allan');
+```
+
+Isso é a **mesma lógica** de:
+
+```ts
+const [usuario, setUsuario] = useState<User | null>(null);
+```
+
+Aqui, o `useState` é uma função genérica, e estamos dizendo: "o tipo do estado pode ser `User` ou `null`".
+
+---
+
 ### Aplicando Genéricos em Componentes React
 
 Este conceito é extremamente útil para criar componentes reutilizáveis em React. O exemplo clássico é um componente de lista que pode renderizar qualquer tipo de dado.
@@ -133,6 +154,30 @@ const GenericListWithKey = <T extends { id: string | number },>({ items, renderI
 };
 ```
 Com `extends { id: string | number }`, estamos dizendo ao TypeScript: "`T` pode ser qualquer tipo, **desde que** ele tenha uma propriedade `id`". Isso nos dá o melhor dos dois mundos: flexibilidade e segurança.
+
+<Aside type="tip" title="Onde mais usamos funções genéricas? 🧩">
+
+* **Funções utilitárias**: como `Array.map`, `Promise`, `fetch`, `filter`, etc.
+* **Classes genéricas**: ex: uma `Queue<T>` para estrutura de dados.
+* **Componentes genéricos**: em bibliotecas como React, Angular, Vue com TS, etc.
+* **APIs com tipos dinâmicos**: como funções que recebem dados de um endpoint e precisam retornar um tipo baseado no parâmetro.
+
+Exemplo com `fetch` tipado:
+
+```ts
+async function buscarDados<T>(url: string): Promise<T> {
+  const res = await fetch(url);
+  return await res.json();
+}
+
+interface Produto {
+  id: number;
+  nome: string;
+}
+
+const produto = await buscarDados<Produto>('/api/produto/1');
+```
+</Aside>
 
 ---
 

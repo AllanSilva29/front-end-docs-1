@@ -39,18 +39,6 @@ const [user, setUser] = useState<User | null>(null);
 // Mais tarde...
 setUser({ name: "Dev", id: 1 }); // OK
 ```
-
-<Aside type="note" title="O que significa a sintaxe <Tipo> depois de uma função?">
-Você notou o padrão `useState<User | null>(...)` e `useRef<HTMLInputElement>(...)`. Essa sintaxe com `<...>` é como passamos um **argumento de tipo** para uma **função genérica**.
-
-Pense nisso como uma instrução explícita que damos à função. Fazemos isso quando o TypeScript não consegue *inferir* (adivinhar) o tipo correto apenas com base nos parâmetros.
-
--   **`useState(null)`**: Sem a ajuda, o TypeScript pensaria que o tipo do estado é `null` para sempre.
--   **`useState<User | null>(null)`**: Aqui, nós dizemos: "Este estado começará como `null`, mas ele também poderá se tornar um objeto do tipo `User`".
-
-Você está essencialmente configurando a função para trabalhar com os tipos que você precisa para aquela situação específica. Caso queira entender mais veja o conteúdo sobre [Genéricos a Fundo](/front-end-docs-1/1-fundamentos-web/5-typescript-essencial/7-genericos-a-fundo)
-</Aside>
-
 ### useRef
 O `useRef` tem dois usos principais, e a tipagem muda um pouco entre eles.
 
@@ -83,6 +71,16 @@ const timerRef = useRef<number | null>(null);
 
 // timerRef.current pode ser um número (o ID) ou null.
 ```
+<Aside type="note" title="O que significa a sintaxe <Tipo> depois de uma função?">
+Você notou o padrão `useState<User | null>(...)` e `useRef<HTMLInputElement>(...)`. Essa sintaxe com `<...>` é como passamos um **argumento de tipo** para uma **função genérica**.
+
+Pense nisso como uma instrução explícita que damos à função. Fazemos isso quando o TypeScript não consegue *inferir* (adivinhar) o tipo correto apenas com base nos parâmetros.
+
+-   **`useState(null)`**: Sem a ajuda, o TypeScript pensaria que o tipo do estado é `null` para sempre.
+-   **`useState<User | null>(null)`**: Aqui, nós dizemos: "Este estado começará como `null`, mas ele também poderá se tornar um objeto do tipo `User`".
+
+Você está essencialmente configurando a função para trabalhar com os tipos que você precisa para aquela situação específica. Caso queira entender mais veja o conteúdo sobre [Genéricos a Fundo](/front-end-docs-1/1-fundamentos-web/5-typescript-essencial/7-genericos-a-fundo)
+</Aside>
 ### useContext
 A tipagem para o Context API acontece na criação do contexto com `createContext`, não no hook `useContext`.
 
