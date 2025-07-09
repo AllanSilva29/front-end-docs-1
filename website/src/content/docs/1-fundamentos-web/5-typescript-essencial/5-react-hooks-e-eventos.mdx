@@ -1,0 +1,153 @@
+---
+title: React - Tipando Hooks e Eventos
+description: Domine a tipagem dos principais hooks do React, como useState, useRef e useContext, e aprenda a manipular eventos do DOM com segurança de tipos.
+---
+
+import { Card, CardGrid, Aside } from '@astrojs/starlight/components';
+
+Depois de tipar componentes e props, o próximo passo lógico é aplicar a segurança do TypeScript aos hooks e eventos do React. Isso garante que seu estado seja consistente e que as interações do usuário sejam manipuladas corretamente.
+
+Vamos explorar os casos mais comuns para facilitar o entendimento.
+
+### useState
+**1. Inferência de Tipo (O mais comum)**
+
+Na maioria das vezes, você não precisa fazer nada. O TypeScript infere o tipo do estado a partir do seu valor inicial.
+
+```tsx
+// `count` é inferido como `number`.
+const [count, setCount] = useState(0);
+
+// `name` é inferido como `string`.
+const [name, setName] = useState("React");
+
+setCount(10); // OK
+// setCount("10"); // Erro!
+```
+
+**2. Tipo Explícito com `<...>`**
+
+Quando o estado pode ter mais de um tipo ou seu valor inicial é `null`, precisamos usar a sintaxe de genéricos para informar o tipo explicitamente.
+
+```tsx
+type User = { name: string; id: number };
+
+// O estado `user` pode ser um objeto `User` ou `null`.
+// Sem o <User | null>, o TS inferiria apenas `null`.
+const [user, setUser] = useState<User | null>(null);
+
+// Mais tarde...
+setUser({ name: "Dev", id: 1 }); // OK
+```
+
+<Aside type="note" title="O que significa a sintaxe <Tipo> depois de uma função?">
+Você notou o padrão `useState<User | null>(...)` e `useRef<HTMLInputElement>(...)`. Essa sintaxe com `<...>` é como passamos um **argumento de tipo** para uma **função genérica**.
+
+Pense nisso como uma instrução explícita que damos à função. Fazemos isso quando o TypeScript não consegue *inferir* (adivinhar) o tipo correto apenas com base nos parâmetros.
+
+-   **`useState(null)`**: Sem a ajuda, o TypeScript pensaria que o tipo do estado é `null` para sempre.
+-   **`useState<User | null>(null)`**: Aqui, nós dizemos: "Este estado começará como `null`, mas ele também poderá se tornar um objeto do tipo `User`".
+
+Você está essencialmente configurando a função para trabalhar com os tipos que você precisa para aquela situação específica. Caso queira entender mais veja o conteúdo sobre [Genéricos a Fundo](/front-end-docs-1/1-fundamentos-web/5-typescript-essencial/7-genericos-a-fundo)
+</Aside>
+
+### useRef
+O `useRef` tem dois usos principais, e a tipagem muda um pouco entre eles.
+
+**1. Ref para Elementos DOM**
+
+Para referenciar um elemento do DOM, você passa o tipo do elemento HTML como genérico. O valor inicial deve ser `null`.
+
+```tsx
+import { useRef, useEffect } from 'react';
+
+const MyInput = () => {
+    // A ref vai apontar para um elemento de input HTML.
+    const inputRef = useRef<HTMLInputElement>(null);
+
+    useEffect(() => {
+        // O TS sabe que `inputRef.current` pode ter `focus()`.
+        inputRef.current?.focus();
+    }, []);
+
+    return <input ref={inputRef} type="text" />;
+}
+```
+
+**2. Ref para Valores Mutáveis**
+
+Para armazenar um valor que não dispara re-renderizações, você tipa o valor que será guardado.
+
+```tsx
+const timerRef = useRef<number | null>(null);
+
+// timerRef.current pode ser um número (o ID) ou null.
+```
+### useContext
+A tipagem para o Context API acontece na criação do contexto com `createContext`, não no hook `useContext`.
+
+O padrão mais comum é criar o contexto com um valor inicial `null` e fornecer o tipo correto.
+
+```tsx
+import { createContext, useContext } from 'react';
+
+type ThemeContextType = {
+    theme: 'light' | 'dark';
+    toggleTheme: () => void;
+};
+
+// 1. Crie o contexto com o tipo e um valor padrão.
+const ThemeContext = createContext<ThemeContextType | null>(null);
+
+// 2. Em seu componente consumidor...
+const useTheme = () => {
+    const context = useContext(ThemeContext);
+    // É crucial verificar se o contexto não é nulo.
+    if (!context) {
+        throw new Error("useTheme deve ser usado dentro de um ThemeProvider");
+    }
+    return context;
+}
+```
+### Eventos do React
+O React envolve os eventos nativos do navegador em um `SyntheticEvent`. O TypeScript nos fornece tipos para cada um deles.
+
+A sintaxe geral é `React.TipoDeEvento<ElementoHTML>`.
+
+**Exemplo 1: Clique de Mouse**
+```tsx
+const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    // `event.currentTarget` é tipado como HTMLButtonElement.
+    console.log("Botão clicado!", event.currentTarget.name);
+};
+
+<button name="submit-btn" onClick={handleClick}>Clique</button>
+```
+
+**Exemplo 2: Mudança em um Input**
+```tsx
+const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    // `event.target.value` está disponível e é uma string.
+    console.log(event.target.value);
+};
+
+<input type="text" onChange={handleChange} />
+```
+
+**Exemplo 3: Envio de Formulário**
+```tsx
+const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    console.log("Formulário enviado!");
+};
+
+<form onSubmit={handleSubmit}>...</form>
+```
+
+<Aside type="tip" title="Como descobrir o tipo de um evento?">
+A maneira mais fácil é deixar seu editor de código ajudar! No VS Code, escreva o manipulador de eventos inline no JSX e passe o mouse sobre a palavra `event`. O editor mostrará o tipo inferido para você.
+
+`<button onClick={(event) => { /* passe o mouse sobre 'event' */ }}>`
+</Aside>
+
+Com o domínio sobre a tipagem de hooks e eventos, você já consegue cobrir a grande maioria dos cenários de desenvolvimento React com TypeScript. A seguir, vamos explorar alguns tipos utilitários que ajudarão a manter seu código ainda mais limpo e reutilizável.

@@ -1,0 +1,111 @@
+---
+title: Tipando Funções
+description: Aprenda a sintaxe para adicionar tipos a parâmetros, valores de retorno e callbacks em funções TypeScript, uma habilidade essencial para React.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+Funções são a base de qualquer aplicação JavaScript, e em React, elas são onipresentes: componentes, hooks, manipuladores de eventos, etc. Tipar funções corretamente é uma das habilidades mais importantes para usar TypeScript de forma eficaz.
+
+A sintaxe de tipagem nos permite definir um "contrato" claro para cada função, especificando quais tipos de argumentos ela espera e que tipo de valor ela retorna.
+
+## A Sintaxe de Tipagem em Funções
+
+A forma mais comum de escrever funções em React é usando *arrow functions*. A sintaxe de tipagem é a seguinte:
+
+```ts
+// const nomeDaFuncao = (param1: tipo, param2: tipo): tipoDeRetorno => { ... }
+
+const add = (a: number, b: number): number => {
+  return a + b;
+};
+
+const result = add(5, 10); // Funciona
+// const error = add(5, "10"); // Erro! O segundo argumento deve ser um número.
+```
+
+Vamos quebrar essa sintaxe:
+1.  **`(a: number, b: number)`**: Esta é a lista de parâmetros. Cada parâmetro é seguido por dois pontos (`:`) e seu tipo.
+2.  **`: number`**: Este é o tipo de retorno da função. Ele vem depois da lista de parâmetros, antes da "seta" (`=>`).
+
+## Parâmetros Opcionais e Valores Padrão
+
+Nem todo parâmetro de uma função é obrigatório.
+
+### Parâmetro Opcional (`?`)
+
+Para tornar um parâmetro opcional, adicione um `?` antes dos dois pontos. Internamente, o TypeScript entende que o tipo desse parâmetro é o tipo definido OU `undefined`.
+
+```ts
+const greet = (name: string, salutation?: string) => {
+  if (salutation) {
+    return `${salutation}, ${name}!`;
+  }
+  return `Olá, ${name}!`;
+};
+
+greet("Mundo"); // "Olá, Mundo!"
+greet("Mundo", "Bem-vindo"); // "Bem-vindo, Mundo!"
+```
+
+### Valor Padrão
+
+Você também pode fornecer um valor padrão para um parâmetro. O TypeScript irá inferir o tipo do parâmetro a partir do valor padrão, então a anotação de tipo se torna opcional (mas é uma boa prática mantê-la).
+
+```ts
+const createButton = (label: string, color: string = "blue") => {
+  // `color` será "blue" se não for fornecido.
+  // O tipo de `color` é inferido como `string`.
+  console.log(`Criando botão com texto "${label}" e cor "${color}"`);
+};
+
+createButton("Confirmar"); // Cor será "blue"
+createButton("Cancelar", "red"); // Cor será "red"
+```
+
+## O Tipo de Retorno: `void`
+
+E se uma função não retorna nada? É aqui que o tipo `void` entra. Ele indica explicitamente que a função completa sua execução, mas não retorna nenhum valor.
+
+```ts
+const logMessage = (message: string): void => {
+  console.log(message);
+  // Nenhum `return` aqui.
+};
+```
+
+<Aside type="tip" title="Quando usar `void` em React?">
+O tipo `void` é extremamente comum em React. A maioria dos manipuladores de eventos, como `onClick` ou `onChange`, são funções que executam uma ação (como atualizar um estado), mas não retornam um valor. Portanto, seu tipo de retorno é quase sempre `void`.
+</Aside>
+
+## Tipando Funções de Callback
+
+Em React, é muito comum passar funções como props. Para isso, podemos definir um tipo para a "assinatura" da função.
+
+Imagine um componente `Button` que recebe uma função `onClick`. Podemos garantir que essa função seja chamada corretamente da seguinte forma:
+
+```ts
+// 1. Defina um tipo para a assinatura da função de callback.
+// Esta função recebe um `id` do tipo `number` e não retorna nada.
+type OnButtonClick = (id: number) => void;
+
+// 2. Use esse tipo na sua função ou componente.
+const setupButton = (label: string, onClick: OnButtonClick) => {
+  // ... lógica para criar um botão ...
+  const buttonId = Math.random();
+
+  // Agora o TypeScript sabe que `onClick` é uma função
+  // e espera um argumento do tipo `number`.
+  // Se você chamar com outro tipo, ele dará um erro.
+  onClick(buttonId);
+};
+
+// Exemplo de uso
+const handleMyClick: OnButtonClick = (id) => {
+  console.log(`Botão com ID ${id} foi clicado!`);
+};
+
+setupButton("Meu Botão", handleMyClick);
+```
+
+Dominar a tipagem de funções, especialmente callbacks, é o passaporte para o próximo passo: tipar componentes React e suas props.

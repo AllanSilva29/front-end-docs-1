@@ -47,10 +47,10 @@ export default defineConfig({
 							label: 'JavaScript para React',
 							autogenerate: { directory: '1-fundamentos-web/4-javascript' },
 						},
-						// {
-						// 	label: 'TypeScript Essencial',
-						// 	autogenerate: { directory: '1-fundamentos-web/5-typescript-essencial' },
-						// },
+						{
+							label: 'TypeScript Essencial',
+							autogenerate: { directory: '1-fundamentos-web/5-typescript-essencial' },
+						},
 					],
 				},
 				{

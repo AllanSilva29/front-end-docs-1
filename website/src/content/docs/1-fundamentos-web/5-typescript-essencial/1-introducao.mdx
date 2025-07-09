@@ -1,0 +1,83 @@
+---
+title: Introdução ao TypeScript para React
+description: Descubra por que TypeScript é uma ferramenta poderosa para desenvolvedores React, melhorando a segurança e a produtividade do seu código.
+---
+
+import { Card, CardGrid, Tabs, TabItem, Aside } from '@astrojs/starlight/components';
+
+Bem-vindo à seção sobre TypeScript! Se você já ouviu falar sobre ele mas nunca entendeu por que tantos desenvolvedores React o adotaram, você está no lugar certo.
+
+**TypeScript é um superset do JavaScript**, o que significa que todo código JavaScript válido também é um código TypeScript válido. Sua principal adição é um sistema de **tipos estáticos**, que permite descrever a "forma" dos seus dados e funções, ajudando a pegar erros antes mesmo de rodar o código.
+
+## Por que usar TypeScript com React?
+
+A combinação de TypeScript com React cria um ambiente de desenvolvimento mais robusto, previsível e produtivo. Os principais benefícios podem ser resumidos nos seguintes pontos:
+
+<CardGrid>
+	<Card title="🛡️ Segurança de Tipos">
+		Previna erros comuns em tempo de desenvolvimento, como `undefined is not a function`, ao garantir que suas variáveis e props tenham os tipos esperados. O TypeScript avisa se você tentar usar um dado de forma incorreta.
+	</Card>
+	<Card title="⚡ Melhor Autocomplete">
+		Seu editor de código (como o VS Code) passa a entender a estrutura dos seus componentes e dados. Ele fornecerá sugestões inteligentes e precisas para props, funções e variáveis, acelerando drasticamente o desenvolvimento.
+	</Card>
+	<Card title="👓 Código Mais Legível">
+		As definições de tipo funcionam como uma auto-documentação. Ao olhar para um componente, você sabe exatamente quais props ele espera e qual o formato de cada uma, tornando a colaboração e a manutenção muito mais fáceis.
+	</Card>
+	<Card title="🔁 Refatoração Segura">
+		Precisa renomear uma prop ou mudar o formato de um dado? Com TypeScript, o compilador mostrará todos os lugares do seu projeto que precisam ser atualizados. Isso torna a refatoração uma tarefa muito menos arriscada.
+	</Card>
+</CardGrid>
+
+## Na Prática: JS vs. TS
+
+Vamos ver um exemplo simples para ilustrar a diferença. Imagine um componente de perfil de usuário.
+
+<Tabs>
+  <TabItem label="Componente em JavaScript">
+    ```jsx
+    // src/components/UserProfile.jsx
+
+    const UserProfile = ({ user }) => {
+      // O que é `user`? É um objeto?
+      // Quais propriedades ele tem? name, age, email?
+      // Se `user` for undefined, isso vai quebrar.
+      return (
+        <div>
+          <h1>{user.name}</h1>
+          <p>Idade: {user.age}</p>
+        </div>
+      );
+    };
+
+    export default UserProfile;
+    ```
+    Nesta versão, não há garantias sobre o formato do objeto `user`. Um erro de digitação (ex: `user.nome` em vez de `user.name`) só seria descoberto em tempo de execução.
+  </TabItem>
+  <TabItem label="Mesmo Componente com TypeScript">
+    ```tsx
+    // src/components/UserProfile.tsx
+
+    // 1. Definimos o "contrato" das props.
+    // Fica claro que `user` é um objeto com `name` (string) e `age` (number).
+    type UserProfileProps = {
+      user: {
+        name: string;
+        age: number;
+      };
+    };
+
+    // 2. Aplicamos o tipo ao parâmetro props.
+    const UserProfile = ({ user }: UserProfileProps) => {
+      return (
+        <div>
+          <h1>{user.name}</h1>
+          <p>Idade: {user.age}</p>
+        </div>
+      );
+    };
+
+    export default UserProfile;
+    ```
+    Agora, se tentarmos passar uma prop `user` com formato incorreto ou tentarmos acessar uma propriedade que não existe (`user.email`), o TypeScript nos avisará imediatamente no editor.
+  </TabItem>
+</Tabs>

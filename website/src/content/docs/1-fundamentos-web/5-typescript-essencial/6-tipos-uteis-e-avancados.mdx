@@ -1,0 +1,159 @@
+---
+title: Tipos Úteis e Avançados
+description: Explore conceitos como Union Types, Intersection Types, Generics e os poderosos Utility Types (Partial, Pick, Omit) para escrever código TypeScript mais flexível e reutilizável.
+---
+
+import { Card, CardGrid, Aside } from '@astrojs/starlight/components';
+
+Vamos explorar alguns conceitos e ferramentas do TypeScript que elevam seu código a outro nível, tornando-o mais flexível, reutilizável e robusto.
+
+## Union Types (`|`)
+
+Um Union Type permite que uma variável seja de um entre vários tipos. Usamos a barra vertical (`|`) para separá-los. É extremamente útil para modelar estados que podem ter valores diferentes, mas finitos.
+
+```ts
+// O estado `status` só pode ser um desses três valores literais.
+type Status = 'loading' | 'success' | 'error';
+
+const [status, setStatus] = useState<Status>('loading');
+
+// ...
+if (status === 'loading') {
+  return <p>Carregando...</p>;
+}
+// ...
+```
+
+## Intersection Types (`&`)
+
+Uma Intersection Type combina múltiplos tipos em um só. Usamos o e-comercial (`&`) para criar um novo tipo que possui **todas** as propriedades dos tipos que o compõem. É uma forma poderosa de estender tipos existentes.
+
+Um uso muito comum em React é combinar as props customizadas de seu componente com todas as props nativas de um elemento HTML.
+
+```tsx
+// Queremos que nosso Input customizado aceite todas as props de um <input> HTML,
+// além de uma `label`.
+type CustomInputProps = {
+  label: string;
+} & React.InputHTMLAttributes<HTMLInputElement>; // Herda props como `placeholder`, `disabled`, `type`, etc.
+
+const CustomInput = ({ label, ...rest }: CustomInputProps) => {
+  return (
+    <div>
+      <label>{label}</label>
+      <input {...rest} /> {/* Passa todas as outras props para o input */}
+    </div>
+  );
+};
+```
+
+## Uma Breve Olhada em Genéricos (`<T>`)
+
+Genéricos são um dos recursos mais poderosos do TypeScript. Eles permitem que você crie componentes e funções "agnósticos" ao tipo, ou seja, que podem funcionar com uma variedade de tipos sem perder a segurança.
+
+Pense em `<T>` como uma variável para um tipo.
+
+Um ótimo exemplo é um componente de lista genérico que pode renderizar qualquer tipo de dado.
+
+```tsx
+// T é um placeholder. Poderia ser `User`, `Product`, etc.
+interface GenericListProps<T> {
+  items: T[]; // Um array de itens do tipo T
+  renderItem: (item: T) => React.ReactNode; // Uma função que sabe como renderizar um item T
+}
+
+// O componente usa `T` para garantir que `items` e `renderItem` sejam compatíveis.
+const GenericList = <T,>({ items, renderItem }: GenericListProps<T>) => {
+  return (
+    <ul>
+      {items.map((item, index) => (
+        <li key={index}>{renderItem(item)}</li>
+      ))}
+    </ul>
+  );
+};
+
+// Uso:
+// const users = [{ name: 'React' }, { name: 'TypeScript' }];
+// <GenericList items={users} renderItem={(user) => <span>{user.name}</span>} />
+```
+<Aside>A vírgula em `<T,>` é uma peculiaridade da sintaxe TSX para diferenciar uma declaração genérica de uma tag JSX.</Aside>
+<Aside type="tip">Veja mais sobre Genéricos no tópico [Genéricos a Fundo](/front-end-docs-1/1-fundamentos-web/5-typescript-essencial/7-genericos-a-fundo)</Aside>
+
+## Utility Types Essenciais
+
+TypeScript vem com vários tipos utilitários "embutidos" que ajudam a manipular outros tipos. Eles são como funções, mas para tipos. Aqui estão os mais úteis para o desenvolvimento com React:
+
+<CardGrid>
+	<Card title="Partial<T>">
+		Cria um tipo onde todas as propriedades de `T` são opcionais. Ideal para cenários de atualização, como em um formulário onde o usuário pode atualizar apenas alguns campos.
+
+		```ts
+		interface User {
+		  name: string;
+		  email: string;
+		}
+
+		// `update` só precisa conter as chaves de User que estão mudando.
+		function updateUser(id: number, update: Partial<User>) {
+		  // ...lógica para atualizar usuário
+		}
+
+		updateUser(1, { email: "new.email@example.com" }); // OK
+		```
+	</Card>
+    <br/>
+	<Card title="Pick<T, K>">
+		Cria um tipo selecionando um conjunto de propriedades `K` de um tipo `T`. Perfeito para extrair apenas os dados necessários para um componente específico.
+
+		```ts
+		interface User {
+		  id: number;
+		  name: string;
+		  email: string;
+		  avatarUrl: string;
+		}
+
+		// O componente UserAvatar só precisa do nome e da URL do avatar.
+		type UserAvatarProps = Pick<User, 'name' | 'avatarUrl'>;
+
+		const UserAvatar = (props: UserAvatarProps) => { /*...*/ };
+		```
+	</Card>
+    <br/>
+	<Card title="Omit<T, K>">
+		O oposto de `Pick`. Cria um tipo removendo um conjunto de propriedades `K` de um tipo `T`. Ótimo para reutilizar props de um componente, excluindo algumas.
+
+		```ts
+		interface ButtonProps {
+		  variant: 'primary' | 'secondary';
+		  size: 'small' | 'large';
+		  onClick: () => void;
+		}
+
+		// Um IconButton sempre tem um ícone, então não precisa de `variant`.
+		// Ele herda `size` e `onClick` de ButtonProps.
+		type IconButtonProps = Omit<ButtonProps, 'variant'> & {
+		  icon: React.ReactNode;
+		};
+
+		const IconButton = (props: IconButtonProps) => { /*...*/ };
+		```
+	</Card>
+    <br/>
+	<Card title="Required<T>">
+		Cria um tipo onde todas as propriedades de `T` são obrigatórias. Útil quando você tem um tipo com muitas propriedades opcionais, mas em um certo contexto, precisa garantir que todas elas existam.
+
+		```ts
+		interface FormConfig {
+		  onSubmit?: () => void;
+		  onReset?: () => void;
+		}
+
+		// A função `initialize` precisa de ambas as propriedades.
+		function initializeForm(config: Required<FormConfig>) {
+		  // ...
+		}
+		```
+	</Card>
+</CardGrid>

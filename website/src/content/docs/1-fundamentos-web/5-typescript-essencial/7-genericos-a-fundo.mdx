@@ -1,0 +1,139 @@
+---
+title: Genéricos (Generics) a Fundo
+description: Um mergulho profundo em genéricos (generics), a ferramenta mais poderosa do TypeScript para criar componentes e funções reutilizáveis e com segurança de tipos.
+---
+
+import { Card, CardGrid, Aside } from '@astrojs/starlight/components';
+
+Genéricos, ou *Generics*, são um dos recursos mais poderosos do TypeScript. Eles permitem que você escreva código que funciona com uma variedade de tipos, em vez de um único tipo. Pense neles como "variáveis de tipo", que permitem criar componentes e funções que são ao mesmo tempo flexíveis e seguros.
+
+### O Problema: Funções Repetitivas
+
+Imagine que você precisa de uma função que pega o último item de um array. Sem genéricos, você teria que escrever uma função para cada tipo de array.
+
+```ts
+// Uma função para um array de números
+function getLastNumberItem(items: number[]): number | undefined {
+  return items[items.length - 1];
+}
+
+// Uma função para um array de strings
+function getLastStringItem(items: string[]): string | undefined {
+  return items[items.length - 1];
+}
+
+// E se tivéssemos um array de objetos? Teríamos que criar outra...
+```
+O código é idêntico, apenas os tipos mudam. Isso não é eficiente.
+
+### A Solução: A Função Genérica
+
+Com genéricos, podemos criar uma única função que funciona para **qualquer** tipo de array.
+
+```ts
+function getLastItem<T>(items: T[]): T | undefined {
+  return items[items.length - 1];
+}
+
+// Uso:
+const numbers = [1, 2, 3];
+const lastNumber = getLastItem(numbers); // `lastNumber` é inferido como `number`
+
+const strings = ["a", "b", "c"];
+const lastString = getLastItem(strings); // `lastString` é inferido como `string`
+```
+
+<Aside type="note" title="Anatomia da Função Genérica">
+Vamos quebrar `function getLastItem<T>(items: T[]): T | undefined`.
+
+1.  **`<T>`**: Esta é a declaração do **parâmetro de tipo genérico**. `T` é um placeholder (um "apelido") para um tipo que será definido quando a função for chamada. Você pode usar qualquer letra, mas `T` (de *Type*) é a convenção.
+
+2.  **`(items: T[])`**: Aqui, usamos `T` para tipar um argumento. Estamos dizendo: "o parâmetro `items` será um array de... seja lá o que `T` for". Se passarmos um `number[]`, `T` se torna `number`. Se passarmos um `string[]`, `T` se torna `string`.
+
+3.  **`: T | undefined`**: Aqui, usamos `T` para tipar o valor de retorno. Estamos dizendo: "esta função retornará um valor do mesmo tipo `T` que foi passado, ou `undefined` se o array estiver vazio".
+
+O TypeScript conecta tudo: o tipo do array de entrada determina o tipo do item de saída.
+</Aside>
+
+### Aplicando Genéricos em Componentes React
+
+Este conceito é extremamente útil para criar componentes reutilizáveis em React. O exemplo clássico é um componente de lista que pode renderizar qualquer tipo de dado.
+
+```tsx
+import type { ReactNode } from 'react';
+
+// 1. Definimos as props usando um tipo genérico T
+interface GenericListProps<T> {
+  items: T[];
+  renderItem: (item: T) => ReactNode;
+}
+
+// 2. Declaramos que o componente é genérico
+// A vírgula em `<T,>` é necessária na sintaxe TSX para evitar ambiguidade com tags HTML
+const GenericList = <T,>({ items, renderItem }: GenericListProps<T>) => {
+  return (
+    <ul>
+      {items.map((item, index) => (
+        <li key={index}>{renderItem(item)}</li>
+      ))}
+    </ul>
+  );
+};
+```
+
+<Aside type="note" title="Anatomia do Componente Genérico">
+1.  **`interface GenericListProps<T>`**: Assim como na função, declaramos um tipo genérico `T` para a nossa interface de props.
+
+2.  **`items: T[]`**: A prop `items` é um array do tipo genérico `T`.
+
+3.  **`renderItem: (item: T) => ReactNode`**: A prop `renderItem` é uma função. Seu primeiro argumento, `item`, é do tipo `T`, garantindo que ele corresponda aos itens do array.
+
+4.  **`const GenericList = <T,>`**: Declaramos que o próprio componente `GenericList` é genérico. O TypeScript agora sabe que quando usarmos `<GenericList ... />`, ele precisa resolver o que é `T`.
+</Aside>
+
+**Uso do componente:**
+```tsx
+const users = [
+  { id: 1, name: 'Ada Lovelace' },
+  { id: 2, name: 'Grace Hopper' },
+];
+
+// O TypeScript infere que T é `{ id: number, name: string }`
+// e garante que `user.name` existe dentro de `renderItem`.
+<GenericList
+  items={users}
+  renderItem={(user) => <span>{user.name}</span>}
+/>
+```
+
+### Aprimorando com Constraints (`extends`)
+
+E se nosso componente precisar que o tipo `T` tenha uma certa "forma"? Por exemplo, para usar uma propriedade `id` como `key` na nossa lista.
+
+Podemos adicionar uma **constraint** (restrição) ao nosso tipo genérico usando a palavra-chave `extends`.
+
+```tsx
+// ...
+
+// T não é mais qualquer coisa. Agora, T DEVE TER uma propriedade `id` do tipo string ou number.
+interface GenericListProps<T extends { id: string | number }> {
+  items: T[];
+  renderItem: (item: T) => ReactNode;
+}
+
+const GenericListWithKey = <T extends { id: string | number },>({ items, renderItem }: GenericListProps<T>) => {
+  return (
+    <ul>
+      {/* Agora é seguro usar item.id, pois a constraint garante que ele existe! */}
+      {items.map((item) => (
+        <li key={item.id}>{renderItem(item)}</li>
+      ))}
+    </ul>
+  );
+};
+```
+Com `extends { id: string | number }`, estamos dizendo ao TypeScript: "`T` pode ser qualquer tipo, **desde que** ele tenha uma propriedade `id`". Isso nos dá o melhor dos dois mundos: flexibilidade e segurança.
+
+---
+
+Dominar genéricos é um salto de qualidade no seu desenvolvimento com TypeScript. Permite criar abstrações poderosas e seguras, resultando em um código mais limpo, reutilizável e profissional.

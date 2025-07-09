@@ -1,0 +1,142 @@
+---
+title: React - Tipando Componentes e Props
+description: Aprenda como definir tipos para as props dos seus componentes React, a diferença entre a abordagem moderna e `React.FC`, e como tipar `children`.
+---
+
+import { Aside, Tabs, TabItem } from '@astrojs/starlight/components';
+
+Chegamos ao coração do TypeScript em React: tipar componentes e suas props. As `props` são a API pública dos seus componentes. Defini-las com tipos claros torna seu uso muito mais seguro e fácil de entender.
+
+## Definindo Tipos para Props
+
+A prática padrão é criar um `type` (ou `interface`) que descreve a "forma" das props que um componente espera.
+
+Vamos criar um componente `Button` simples. Ele precisa de um texto (`label`) e uma função para ser executada ao ser clicado (`onClick`).
+
+```tsx
+// 1. Definimos o tipo para as props.
+//    - `label` é uma string.
+//    - `onClick` é uma função que não recebe argumentos e não retorna nada (`void`).
+type ButtonProps = {
+  label: string;
+  onClick: () => void;
+};
+
+// 2. Aplicamos o tipo ao parâmetro `props`.
+const Button = (props: ButtonProps) => {
+  return <button onClick={props.onClick}>{props.label}</button>;
+};
+
+// Ou, usando desestruturação, que é mais comum:
+const ButtonDestructured = ({ label, onClick }: ButtonProps) => {
+  return <button onClick={onClick}>{label}</button>;
+};
+```
+
+Com `ButtonProps`, o TypeScript garantirá que:
+1.  Qualquer um que use o componente `Button` passe as props `label` e `onClick`.
+2.  `label` seja sempre uma `string`.
+3.  `onClick` seja sempre uma `function`.
+
+## Tipando Componentes: Abordagem Moderna vs. `React.FC`
+
+Existem duas maneiras principais de tipar um componente funcional. A abordagem moderna é mais simples e recomendada, mas você certamente encontrará a abordagem com `React.FC` em códigos mais antigos ou em algumas bibliotecas.
+
+<Tabs>
+  <TabItem label="Abordagem Moderna (Recomendada)">
+    ```tsx
+    type GreetingProps = {
+      name: string;
+    };
+
+    // A tipagem é feita diretamente no parâmetro `props`.
+    // Simples, direto e eficaz.
+    const Greeting = ({ name }: GreetingProps) => {
+      return <h1>Olá, {name}!</h1>;
+    };
+    ```
+    **Vantagens:**
+    - **Explícito:** Você só tem as props que declara. A prop `children` não é adicionada implicitamente.
+    - **Simples:** A sintaxe é mais limpa e consistente com outras funções TypeScript.
+    - **Compatibilidade:** Funciona melhor com genéricos e outras funcionalidades avançadas do TypeScript.
+  </TabItem>
+  <TabItem label="Abordagem Antiga (React.FC)">
+    ```tsx
+    import React from 'react'; // ou import { FC } from 'react';
+
+    type GreetingProps = {
+      name: string;
+    };
+
+    // O tipo do componente é definido como React.FC (Functional Component).
+    const Greeting: React.FC<GreetingProps> = ({ name }) => {
+      return <h1>Olá, {name}!</h1>;
+    };
+    ```
+    `React.FC` era o padrão antigo, mas hoje é menos utilizado por duas razões principais:
+    1.  **`children` Implícito:** Ele adiciona `children?: React.ReactNode` às suas props automaticamente, mesmo que seu componente não precise deles. Isso pode ser confuso.
+    2.  **Problemas Históricos:** Apresentava algumas inconsistências com `defaultProps` e outras funcionalidades.
+  </TabItem>
+</Tabs>
+
+<Aside type="tip">
+**Prefira sempre a abordagem moderna.** Ela é mais direta, menos verbosa e evita comportamentos implícitos. A comunidade React e a maioria das ferramentas modernas se alinharam a essa prática.
+</Aside>
+
+## Tipando a prop `children`
+
+Como a abordagem moderna não inclui `children` por padrão, como fazemos para tipá-la quando nosso componente precisa encapsular outros elementos? Simplesmente a adicionamos ao nosso tipo de props usando `React.ReactNode`.
+
+`React.ReactNode` é um tipo especial do React que representa qualquer coisa que o React pode renderizar: um elemento JSX, um array de elementos, uma string, um número, ou `null`/`undefined`.
+
+```tsx
+import type { ReactNode } from 'react';
+
+// Um componente de Card que envolve um conteúdo.
+type CardProps = {
+  title: string;
+  children: ReactNode; // Aqui está!
+};
+
+const Card = ({ title, children }: CardProps) => {
+  return (
+    <div className="card">
+      <h2>{title}</h2>
+      <div className="card-content">
+        {children}
+      </div>
+    </div>
+  );
+};
+
+// Uso:
+// <Card title="Meu Card">
+//   <p>Este parágrafo é o children.</p>
+// </Card>
+```
+
+## Props Opcionais e Valores Padrão
+
+Assim como em funções, você pode marcar props como opcionais com `?`. Para uma melhor experiência, combine isso com valores padrão na desestruturação do componente.
+
+```tsx
+// Nosso `ButtonProps`, agora com uma prop `variant` opcional.
+type ButtonProps = {
+  label: string;
+  onClick: () => void;
+  variant?: 'primary' | 'secondary'; // `variant` pode ser omitido.
+};
+
+const Button = ({ label, onClick, variant = 'primary' }: ButtonProps) => {
+  const buttonClass = `button button--${variant}`;
+
+  return (
+    <button className={buttonClass} onClick={onClick}>
+      {label}
+    </button>
+  );
+};
+```
+Neste exemplo, se a prop `variant` não for passada, ela assumirá o valor `'primary'` por padrão.
+
+Agora que sabemos tipar componentes e suas props, o próximo passo é dominar a tipagem dos ganchos (hooks) do React, como `useState` e `useRef`, e os eventos do DOM.

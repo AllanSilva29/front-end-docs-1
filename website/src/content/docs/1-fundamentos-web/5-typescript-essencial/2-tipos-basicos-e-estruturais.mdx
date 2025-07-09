@@ -1,0 +1,125 @@
+---
+title: Tipos Básicos e Estruturais
+description: Aprenda sobre os tipos fundamentais do TypeScript, como `string`, `number`, `array`, `object`, e a diferença crucial entre `type` e `interface`.
+---
+
+import { Aside, Tabs, TabItem } from '@astrojs/starlight/components';
+
+Todo o poder do TypeScript começa com sua capacidade de entender os "tipos" de dados. Nesta página, vamos cobrir os blocos de construção essenciais que você usará para descrever suas variáveis, props e estados.
+
+## Tipos Primitivos
+
+Estes são os tipos de dados mais básicos, herdados diretamente do JavaScript.
+
+-   **`string`**: Para textos. Ex: `let name: string = "React";`
+-   **`number`**: Para números, sejam inteiros ou de ponto flutuante. Ex: `let version: number = 18;`
+-   **`boolean`**: Para valores verdadeiros ou falsos. Ex: `let isAwesome: boolean = true;`
+-   **`null`**: Para a ausência intencional de um valor.
+-   **`undefined`**: Para variáveis que foram declaradas mas não inicializadas.
+
+## Tipos Especiais
+
+O TypeScript adiciona alguns tipos especiais para lidar com cenários específicos.
+
+-   **`any`**: Permite qualquer tipo. Essencialmente, desliga a verificação de tipos do TypeScript para uma variável.
+
+    <Aside type="danger" title="Cuidado com o 'any'">
+    O `any` é uma porta de escape, mas deve ser evitado sempre que possível. Usá-lo anula os benefícios de segurança do TypeScript e pode esconder bugs. Use-o apenas como último recurso ou durante a migração de um código JavaScript.
+    </Aside>
+
+-   **`unknown`**: Uma alternativa mais segura ao `any`. Você pode atribuir qualquer valor a uma variável do tipo `unknown`, mas não pode usá-la sem antes fazer uma verificação de tipo (narrowing).
+
+    ```ts
+    let value: unknown = "Olá, mundo!";
+
+    // Erro: 'value' is of type 'unknown'.
+    // console.log(value.toUpperCase());
+
+    // Correto: Verificamos o tipo antes de usar.
+    if (typeof value === 'string') {
+      console.log(value.toUpperCase()); // Agora funciona!
+    }
+    ```
+
+-   **`void`**: Usado principalmente para indicar que uma função não retorna nenhum valor. Veremos mais sobre isso ao tipar funções.
+
+## Estruturas de Dados
+
+Para dados mais complexos, como arrays e objetos, o TypeScript oferece uma sintaxe clara.
+
+### Arrays
+
+Você pode tipar um array de duas maneiras:
+
+```ts
+// Sintaxe preferida e mais comum:
+const versions: number[] = [16, 17, 18];
+const names: string[] = ["React", "Vue", "Svelte"];
+
+// Sintaxe genérica (menos comum):
+const tools: Array<string> = ["Vite", "Webpack"];
+```
+
+### Objetos
+
+Para objetos, você descreve sua "forma" (shape), listando suas propriedades e os tipos correspondentes.
+
+```ts
+let myComponent: {
+  name: string;
+  version: number;
+  isReleased: boolean;
+};
+
+myComponent = {
+  name: "React",
+  version: 18,
+  isReleased: true,
+};
+```
+
+Definir a forma de um objeto diretamente na anotação de tipo pode ser verboso. Para estruturas reutilizáveis, como props de componentes, usamos `type` ou `interface`.
+
+## `type` vs. `interface`
+
+`type` e `interface` são duas maneiras de nomear um tipo de objeto. Ambas são muito parecidas, mas têm diferenças sutis.
+
+<Tabs>
+  <TabItem label="Usando `type`">
+    ```ts
+    type ComponentProps = {
+      title: string;
+      disabled?: boolean; // '?' torna a propriedade opcional
+    };
+
+    const Button = (props: ComponentProps) => {
+      // ...
+    };
+    ```
+  </TabItem>
+  <TabItem label="Usando `interface`">
+    ```ts
+    interface ComponentProps {
+      title: string;
+      disabled?: boolean; // '?' torna a propriedade opcional
+    };
+
+    const Button = (props: ComponentProps) => {
+      // ...
+    };
+    ```
+  </TabItem>
+</Tabs>
+
+**Principais diferenças:**
+
+1.  **Extensão:** Interfaces podem ser "reabertas" e ter novas propriedades adicionadas (declaration merging), o que é útil para estender tipos em bibliotecas. `type` não pode ser reaberto, mas pode ser combinado usando uniões (`|`) e interseções (`&`).
+2.  **Unions e Intersections:** A sintaxe para criar tipos complexos com `type` é geralmente mais limpa e direta.
+
+<Aside type="tip" title="Qual usar em projetos React?">
+Uma convenção popular e recomendada é:
+*   Use **`type`** para definir props e estados dentro da sua aplicação. A sintaxe é mais consistente com outras funcionalidades do TS como `union types`.
+*   Use **`interface`** se você estiver criando uma biblioteca pública ou precisar da capacidade de "declaration merging".
+
+Para o nosso guia, focaremos principalmente no uso de `type` por ser mais comum no desenvolvimento de aplicações React modernas.
+</Aside>
