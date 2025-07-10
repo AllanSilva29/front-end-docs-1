@@ -15,40 +15,42 @@ Felizmente, existem apenas duas regras para lembrar.
 
 Sempre chame os Hooks no nível superior do seu componente de função, antes de qualquer `return`.
 
-<CardGrid>
-	<Card title="❌ Incorreto">
-    ```jsx
-    function MyComponent({ showEffect }) {
-      if (showEffect) {
-        // ERRADO: Hook chamado dentro de um condicional.
-        useEffect(() => {
-          // ...
-        });
-      }
-      
-      const [name, setName] = useState(''); // OK
-      // ...
-    }
-    ```
-	</Card>
-    <br/>
-	<Card title="✅ Correto">
-    ```jsx
-    function MyComponent({ showEffect }) {
-      const [name, setName] = useState(''); // OK
-
-      useEffect(() => {
-        // Coloque o condicional *dentro* do Hook.
+<div style="padding: 0 100px">
+  <CardGrid>
+    <Card title="❌ Incorreto">
+      ```jsx
+      function MyComponent({ showEffect }) {
         if (showEffect) {
-          // ...
+          // ERRADO: Hook chamado dentro de um condicional.
+          useEffect(() => {
+            // ...
+          });
         }
-      }, [showEffect]); // OK
+        
+        const [name, setName] = useState(''); // OK
+        // ...
+      }
+      ```
+    </Card>
+      <br/>
+    <Card title="✅ Correto">
+      ```jsx
+      function MyComponent({ showEffect }) {
+        const [name, setName] = useState(''); // OK
 
-      // ...
-    }
-    ```
-	</Card>
-</CardGrid>
+        useEffect(() => {
+          // Coloque o condicional *dentro* do Hook.
+          if (showEffect) {
+            // ...
+          }
+        }, [showEffect]); // OK
+
+        // ...
+      }
+      ```
+    </Card>
+  </CardGrid>
+</div>
 
 ## Regra 2: Chame Hooks Apenas de Componentes de Função React
 
@@ -59,33 +61,35 @@ Você só pode chamar Hooks a partir de duas fontes:
 1.  De **Componentes de Função** React.
 2.  De **Custom Hooks** (que, por sua vez, só podem ser chamados de componentes ou outros Custom Hooks).
 
-<CardGrid>
-	<Card title="❌ Incorreto">
-    ```jsx
-    // Uma função JavaScript comum, não um componente.
-    function updateTitle(title) {
-      // ERRADO: Hooks não podem ser chamados aqui.
-      useEffect(() => {
-        document.title = title;
-      }, [title]);
-    }
-    ```
-	</Card>
-    <br/>
-	<Card title="✅ Correto">
-    ```jsx
-    // Um componente de função React.
-    function TitleUpdater({ title }) {
-      // OK: Hook chamado dentro de um componente.
-      useEffect(() => {
-        document.title = title;
-      }, [title]);
-      
-      return <h1>{title}</h1>;
-    }
-    ```
-	</Card>
-</CardGrid>
+<div style="padding: 0 100px">
+  <CardGrid>
+    <Card title="❌ Incorreto">
+      ```jsx
+      // Uma função JavaScript comum, não um componente.
+      function updateTitle(title) {
+        // ERRADO: Hooks não podem ser chamados aqui.
+        useEffect(() => {
+          document.title = title;
+        }, [title]);
+      }
+      ```
+    </Card>
+      <br/>
+    <Card title="✅ Correto">
+      ```jsx
+      // Um componente de função React.
+      function TitleUpdater({ title }) {
+        // OK: Hook chamado dentro de um componente.
+        useEffect(() => {
+          document.title = title;
+        }, [title]);
+        
+        return <h1>{title}</h1>;
+      }
+      ```
+    </Card>
+  </CardGrid>
+</div>
 
 ## Mas... Por Que Essas Regras Existem?
 
