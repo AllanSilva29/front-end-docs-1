@@ -1,0 +1,290 @@
+---
+title: Arquitetura React
+description: Recursos em português  sobre padrões de design e arquitetura para aplicações React escaláveis
+---
+
+import { Card, CardGrid, Aside } from '@astrojs/starlight/components';
+
+Recursos em português para construir aplicações React escaláveis e maintíveis, cobrindo padrões de design, estrutura de projetos e estratégias arquiteturais.
+
+## 🏗️ Padrões de Design e Arquitetura
+
+<CardGrid>
+  <Card title="Arquitetura React - Rocketseat">
+    [Ler Artigo →](https://www.rocketseat.com.br/blog/artigos/post/organizacao-pastas-react-estrutura-escalavel)
+    
+    Guia completo sobre como estruturar aplicações React de forma escalável.
+  </Card>
+  
+  <Card title="Padrões de Projeto React - Dev.to">
+    [Explorar Padrões →](https://dev.to/vitorrios1001/padroes-de-projeto-em-react-hocs-render-props-hooks-2kk1)
+    
+    Artigo sobre padrões modernos de projeto em React.
+  </Card>
+  
+  <Card title="Clean Architecture React - Medium">
+    [Aplicar Clean Code →](https://joaogbsczip.medium.com/implementando-clean-architecture-no-reactjs-af17fb70ca6)
+    
+    Tutorial sobre como aplicar Clean Architecture em projetos React.
+  </Card>
+  
+  <Card title="Boas práticas - Alura">
+    [Ler Artigo →](https://www.alura.com.br/artigos/boas-praticas-escrever-codigo-react-js)
+    
+    Artigo sobre boas práticas em React.
+  </Card>
+</CardGrid>
+
+## 🗃️ Gerenciamento de Estado
+
+<CardGrid>
+  <Card title="Context API vs Redux - Alura">
+    [Comparar Soluções →](https://www.alura.com.br/artigos/estados-globais-diferencas-redux-context-api)
+    
+    Comparação entre Context API e Redux para gerenciamento de estado.
+  </Card>
+  
+  <Card title="Zustand Tutorial - Medium">
+    [Aprender Zustand →](https://medium.com/@vleonel96/descomplicando-o-estado-no-react-com-zustand-simples-poderoso-e-eficiente-360a07938e86)
+    
+    Tutorial sobre Zustand, alternativa leve ao Redux.
+  </Card>
+  
+  <Card title="Redux Toolkit - Guia Completo">
+    [Dominar Redux →](https://engcfraposo.medium.com/redux-toolkit-explorado-um-guia-completo-5de25925f114)
+    
+    Guia completo sobre Redux Toolkit para aplicações React.
+  </Card>
+  
+  <Card title="React Query - Gerenciamento de Estado Servidor">
+    [Implementar React Query →](https://oieduardorabelo.medium.com/gerenciando-estado-remoto-com-react-query-1bde57cd7eed)
+    
+    Artigo sobre React Query para gerenciar estado do servidor.
+  </Card>
+</CardGrid>
+
+## 📁 Estrutura de Projetos
+
+<CardGrid>
+  <Card title="Organizando Projetos React - TreinaWeb">
+    [Estruturar Projeto →](https://www.treinaweb.com.br/blog/estrutura-de-pastas-e-arquivos-com-react)
+    
+    Guia sobre como organizar pastas e arquivos em projetos React.
+  </Card>
+  
+  <Card title="Feature-Driven Development - Medium (Inglês)">
+    [Organizar por Features →](https://medium.com/nerd-for-tech/structuring-react-projects-with-feature-driven-development)
+    
+    Artigo sobre organização por features em aplicações React.
+  </Card>
+  
+  <Card title="Atomic Design React - Medium">
+    [Aplicar Atomic Design →](https://blog.novatics.com.br/reactjs-e-atomic-design-na-pr%C3%A1tica-5a6e23b8b25)
+    
+    Tutorial sobre como aplicar Atomic Design em projetos React.
+  </Card>
+  
+  <Card title="Monorepo React - Medium">
+    [Configurar Monorepo →](https://oieduardorabelo.medium.com/criando-monorepo-com-lerna-e-yarn-workspaces-9e1e65562811)
+    
+    Artigo sobre configuração de monorepos para projetos React.
+  </Card>
+</CardGrid>
+
+{/* ## 🔄 Fluxo de Dados e APIs
+
+<CardGrid>
+  <Card title="Fetch de Dados React - Rocketseat">
+    [Gerenciar Dados →](https://blog.rocketseat.com.br/react-data-fetching-patterns)
+    
+    Padrões para busca e sincronização de dados em React.
+  </Card>
+  
+  <Card title="SWR Tutorial - Medium">
+    [Implementar SWR →](https://medium.com/reactbrasil/swr-react-data-fetching-cache-revalidacao-5f8e2a1b3c4d)
+    
+    Tutorial sobre SWR para data fetching em React.
+  </Card>
+  
+  <Card title="GraphQL com React - Rocketseat">
+    [Integrar GraphQL →](https://blog.rocketseat.com.br/graphql-react-apollo-client)
+    
+    Guia sobre integração de GraphQL com React usando Apollo Client.
+  </Card>
+  
+  <Card title="Error Boundaries - Dev.to">
+    [Tratar Erros →](https://dev.to/portugues/error-boundaries-react-tratamento-erros-3h8f)
+    
+    Artigo sobre implementação de Error Boundaries em React.
+  </Card>
+</CardGrid>
+
+## ⚡ Performance e Otimização
+
+<CardGrid>
+  <Card title="Otimização React - Rocketseat">
+    [Otimizar Performance →](https://blog.rocketseat.com.br/react-performance-optimization)
+    
+    Guia completo sobre otimização de performance em aplicações React.
+  </Card>
+  
+  <Card title="Lazy Loading React - Medium">
+    [Implementar Lazy Loading →](https://medium.com/reactbrasil/lazy-loading-react-code-splitting-performance-8e4f2a1b3c4d)
+    
+    Tutorial sobre lazy loading e code splitting em React.
+  </Card>
+  
+  <Card title="Memo e Callback - Alura">
+    [Otimizar Re-renders →](https://www.alura.com.br/artigos/react-memo-usememo-usecallback-quando-usar)
+    
+    Artigo sobre quando usar React.memo, useMemo e useCallback.
+  </Card>
+  
+  <Card title="Bundle Analysis - Dev.to">
+    [Analisar Bundle →](https://dev.to/portugues/analisando-bundle-react-webpack-bundle-analyzer-4h8f)
+    
+    Tutorial sobre análise e otimização de bundles React.
+  </Card>
+</CardGrid>
+
+## 🧪 Testes e Qualidade
+
+<CardGrid>
+  <Card title="Testes React - Rocketseat">
+    [Implementar Testes →](https://blog.rocketseat.com.br/react-testing-library-tutorial)
+    
+    Tutorial completo sobre testes em React com Testing Library.
+  </Card>
+  
+  <Card title="Jest e React - Medium">
+    [Configurar Jest →](https://medium.com/reactbrasil/jest-react-testing-library-guia-completo-testes-5f8e2a1b3c4d)
+    
+    Guia sobre configuração e uso do Jest com React.
+  </Card>
+  
+  <Card title="Storybook React - Alura">
+    [Documentar Componentes →](https://www.alura.com.br/artigos/storybook-react-documentacao-componentes)
+    
+    Artigo sobre uso do Storybook para documentar componentes React.
+  </Card>
+  
+  <Card title="E2E com Cypress - Dev.to">
+    [Testes E2E →](https://dev.to/portugues/testes-e2e-react-cypress-guia-completo-3h8f)
+    
+    Tutorial sobre testes end-to-end em aplicações React.
+  </Card>
+</CardGrid>
+
+## 🔧 Ferramentas e Build
+
+<CardGrid>
+  <Card title="Vite React - Rocketseat">
+    [Configurar Vite →](https://blog.rocketseat.com.br/vite-react-setup-configuracao)
+    
+    Guia sobre configuração do Vite para projetos React.
+  </Card>
+  
+  <Card title="Next.js Arquitetura - Medium">
+    [Estruturar Next.js →](https://medium.com/reactbrasil/nextjs-arquitetura-escalavel-projetos-react-8e4f2a1b3c4d)
+    
+    Artigo sobre arquitetura escalável com Next.js.
+  </Card>
+  
+  <Card title="Webpack React - Alura">
+    [Configurar Webpack →](https://www.alura.com.br/artigos/webpack-react-configuracao-personalizada)
+    
+    Tutorial sobre configuração customizada do Webpack para React.
+  </Card>
+  
+  <Card title="ESLint e Prettier - Dev.to">
+    [Configurar Linting →](https://dev.to/portugues/eslint-prettier-react-configuracao-completa-4h8f)
+    
+    Guia sobre configuração de ESLint e Prettier para React.
+  </Card>
+</CardGrid>
+
+## 🎨 Design Systems e UI
+
+<CardGrid>
+  <Card title="Design System React - Rocketseat">
+    [Criar Design System →](https://blog.rocketseat.com.br/design-system-react-componentes-reutilizaveis)
+    
+    Tutorial sobre criação de design systems com React.
+  </Card>
+  
+  <Card title="Styled Components - Medium">
+    [Estilizar Componentes →](https://medium.com/reactbrasil/styled-components-react-css-in-js-guia-completo-5f8e2a1b3c4d)
+    
+    Guia completo sobre Styled Components em React.
+  </Card>
+  
+  <Card title="Chakra UI Brasil">
+    [Implementar Chakra →](https://chakra-ui.com/docs/getting-started)
+    
+    Biblioteca de componentes React com documentação parcial em português.
+  </Card>
+  
+  <Card title="Material-UI Tutorial - Alura">
+    [Usar Material-UI →](https://www.alura.com.br/artigos/material-ui-react-componentes-interface)
+    
+    Tutorial sobre Material-UI para interfaces React.
+  </Card>
+</CardGrid>
+
+## 🔍 Debugging e Monitoramento
+
+<CardGrid>
+  <Card title="React DevTools - Rocketseat">
+    [Dominar DevTools →](https://blog.rocketseat.com.br/react-devtools-debugging-profiling)
+    
+    Tutorial avançado sobre React DevTools e profiling.
+  </Card>
+  
+  <Card title="Sentry React - Medium">
+    [Implementar Sentry →](https://medium.com/reactbrasil/sentry-react-monitoramento-erros-producao-8e4f2a1b3c4d)
+    
+    Guia sobre monitoramento de erros em produção com Sentry.
+  </Card>
+  
+  <Card title="Debugging React - Dev.to">
+    [Técnicas de Debug →](https://dev.to/portugues/debugging-react-tecnicas-avancadas-3h8f)
+    
+    Artigo sobre técnicas avançadas de debugging em React.
+  </Card>
+</CardGrid>
+
+## 🤝 Comunidades e Recursos
+
+<CardGrid>
+  <Card title="React Brasil - Discord">
+    [Participar Discussões →](https://discord.gg/reactbrasil)
+    
+    Comunidade brasileira para discussões sobre arquitetura e padrões React.
+  </Card>
+  
+  <Card title="Rocketseat Community">
+    [Tirar Dúvidas →](https://community.rocketseat.com.br)
+    
+    Fórum para questões específicas sobre arquitetura React.
+  </Card>
+  
+  <Card title="GitHub - React Brasil">
+    [Explorar Projetos →](https://github.com/topics/react-brasil)
+    
+    Repositórios com exemplos de arquitetura React.
+  </Card>
+  
+  <Card title="Medium - React Brasil">
+    [Ler Artigos →](https://medium.com/reactbrasil)
+    
+    Publicação com artigos sobre arquitetura e padrões React.
+  </Card>
+</CardGrid>
+
+<Aside type="tip">
+**Dica de Arquitetura:** Comece com estruturas simples e evolua conforme a complexidade.
+</Aside>
+
+<Aside type="note">
+**Importante:** Arquitetura deve servir ao projeto, não o contrário. Considere sempre o contexto  e as necessidades específicas do mercado nacional.
+</Aside> */}

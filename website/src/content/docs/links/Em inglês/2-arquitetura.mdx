@@ -1,0 +1,268 @@
+---
+title: Arquitetura React
+description: Padrões de design, estrutura de projetos e estratégias para aplicações React escaláveis
+---
+
+import { Card, CardGrid, Aside } from '@astrojs/starlight/components';
+
+Recursos para construir aplicações React escaláveis e maintíveis, cobrindo padrões de design, estrutura de projetos e estratégias arquiteturais.
+
+## 🏗️ Padrões de Design
+
+<CardGrid>
+  <Card title="React Architecture Guide">
+    [Ler Guia →](https://react.dev/learn/thinking-in-react)
+    
+    Guia oficial sobre como pensar em React e estruturar aplicações de forma escalável.
+  </Card>
+  
+  <Card title="Component Design Patterns">
+    [Explorar Padrões →](https://reactpatterns.com)
+    
+    Coleção de padrões de design para componentes React, incluindo compound components e render props.
+  </Card>
+  
+  <Card title="Atomic Design for React">
+    [Ler Metodologia →](https://atomicdesign.bradfrost.com)
+    
+    Metodologia para estruturar design systems usando conceitos de átomos, moléculas e organismos.
+  </Card>
+  
+  <Card title="React Design Patterns">
+    [Acessar Artigo →](https://blog.logrocket.com/react-design-patterns/)
+    
+    Padrões modernos de design para React, incluindo HOCs, render props e custom hooks.
+  </Card>
+</CardGrid>
+
+## 🗃️ Gerenciamento de Estado
+
+<CardGrid>
+  <Card title="Redux Toolkit">
+    [Acessar Documentação →](https://redux-toolkit.js.org)
+    
+    Ferramenta oficial para Redux com menos boilerplate e melhores práticas integradas.
+  </Card>
+  
+  <Card title="Zustand">
+    [Explorar Biblioteca →](https://github.com/pmndrs/zustand)
+    
+    Gerenciador de estado leve e simples, ideal para aplicações pequenas e médias.
+  </Card>
+  
+  <Card title="React Query / TanStack Query">
+    [Acessar Documentação →](https://tanstack.com/query/latest)
+    
+    Biblioteca para gerenciamento de estado de servidor com cache, sincronização e otimização.
+  </Card>
+  
+  <Card title="Jotai">
+    [Explorar Biblioteca →](https://jotai.org)
+    
+    Gerenciamento de estado atômico para React, inspirado no Recoil.
+  </Card>
+  
+  <Card title="React Context Best Practices">
+    [Ler Artigo →](https://kentcdodds.com/blog/how-to-use-react-context-effectively)
+    
+    Como usar Context API efetivamente sem problemas de performance.
+  </Card>
+</CardGrid>
+
+## 📁 Estrutura de Projetos
+
+<CardGrid>
+  <Card title="React Folder Structure">
+    [Ver Estruturas →](https://www.robinwieruch.de/react-folder-structure/)
+    
+    Diferentes abordagens para organizar arquivos e pastas em projetos React.
+  </Card>
+  
+  <Card title="Feature-Driven Development">
+    [Ler Abordagem →](https://feature-sliced.design)
+    
+    Metodologia para estruturar aplicações frontend de forma escalável por features.
+  </Card>
+  
+  <Card title="Bulletproof React">
+    [Acessar Estrutura →](https://github.com/alan2207/bulletproof-react)
+    
+    Arquitetura robusta para aplicações React em produção com best practices.
+  </Card>
+  
+  <Card title="React Enterprise Architecture">
+    [Explorar Padrões →](https://github.com/react-enterprise/react-enterprise-starter-kit)
+    
+    Starter kit com arquitetura enterprise para aplicações React complexas.
+  </Card>
+</CardGrid>
+
+## 🔄 Fluxo de Dados
+
+<CardGrid>
+  <Card title="Data Fetching Patterns">
+    [Ler Padrões →](https://kentcdodds.com/blog/fix-the-slow-render-before-you-fix-the-slow-network)
+    
+    Padrões para busca e sincronização de dados em aplicações React.
+  </Card>
+  
+  <Card title="Apollo Client">
+    [Acessar Documentação →](https://www.apollographql.com/docs/react/)
+    
+    Cliente GraphQL completo com cache, otimização e ferramentas de desenvolvimento.
+  </Card>
+  
+  <Card title="SWR">
+    [Explorar Biblioteca →](https://swr.vercel.app)
+    
+    Biblioteca para data fetching com cache, revalidação e sincronização automática.
+  </Card>
+  
+  <Card title="React Error Boundaries">
+    [Implementar Padrão →](https://kentcdodds.com/blog/use-react-error-boundary-to-handle-errors-in-react)
+    
+    Padrão para capturar e tratar erros em componentes React de forma elegante.
+  </Card>
+</CardGrid>
+
+## ⚡ Performance
+
+<CardGrid>
+  <Card title="React Performance Guide">
+    [Ler Guia →](https://react.dev/learn/render-and-commit)
+    
+    Guia oficial sobre otimização de performance em aplicações React.
+  </Card>
+  
+  <Card title="Web.dev React Performance">
+    [Acessar Recursos →](https://web.dev/react/)
+    
+    Recursos do Google sobre performance em React, incluindo métricas e otimizações.
+  </Card>
+  
+  <Card title="React Performance Profiling">
+    [Aprender Profiling →](https://kentcdodds.com/blog/profile-a-react-app-for-performance)
+    
+    Como fazer profiling de aplicações React para identificar gargalos.
+  </Card>
+  
+  <Card title="Bundle Analysis">
+    [Analisar Bundles →](https://create-react-app.dev/docs/analyzing-the-bundle-size/)
+    
+    Ferramentas e técnicas para analisar e otimizar o tamanho dos bundles React.
+  </Card>
+</CardGrid>
+
+## 🧪 Testes
+
+<CardGrid>
+  <Card title="React Testing Library">
+    [Acessar Documentação →](https://testing-library.com/docs/react-testing-library/intro)
+    
+    Biblioteca principal para testes de componentes React focada na experiência do usuário.
+  </Card>
+  
+  <Card title="Testing Best Practices">
+    [Ler Práticas →](https://kentcdodds.com/blog/common-mistakes-with-react-testing-library)
+    
+    Melhores práticas para testes em React, evitando erros comuns.
+  </Card>
+  
+  <Card title="MSW (Mock Service Worker)">
+    [Explorar Ferramenta →](https://mswjs.io)
+    
+    Ferramenta para mock de APIs em testes, funcionando tanto em browser quanto Node.js.
+  </Card>
+  
+  <Card title="Storybook">
+    [Acessar Ferramenta →](https://storybook.js.org)
+    
+    Ferramenta para desenvolvimento e documentação de componentes isolados.
+  </Card>
+</CardGrid>
+
+## 🔧 Ferramentas de Build
+
+<CardGrid>
+  <Card title="Vite">
+    [Acessar Documentação →](https://vitejs.dev)
+    
+    Build tool extremamente rápido com suporte nativo a React e Hot Module Replacement.
+  </Card>
+  
+  <Card title="Next.js">
+    [Explorar Framework →](https://nextjs.org)
+    
+    Framework React com SSR, SSG e muitas funcionalidades para aplicações full-stack.
+  </Card>
+  
+  <Card title="Remix">
+    [Acessar Framework →](https://remix.run)
+    
+    Framework full-stack React focado em performance e experiência do usuário.
+  </Card>
+  
+  <Card title="Webpack Configuration">
+    [Ler Guia →](https://webpack.js.org/guides/getting-started/)
+    
+    Configuração avançada do Webpack para projetos React customizados.
+  </Card>
+</CardGrid>
+
+## 🎨 Design Systems
+
+<CardGrid>
+  <Card title="Chakra UI">
+    [Explorar Biblioteca →](https://chakra-ui.com)
+    
+    Biblioteca de componentes React simples e acessível para construção rápida de interfaces.
+  </Card>
+  
+  <Card title="Material-UI (MUI)">
+    [Acessar Biblioteca →](https://mui.com)
+    
+    Implementação completa do Material Design para React com componentes ricos.
+  </Card>
+  
+  <Card title="Ant Design">
+    [Explorar Sistema →](https://ant.design)
+    
+    Design system empresarial com componentes React extensivos e bem documentados.
+  </Card>
+  
+  <Card title="Building Design Systems">
+    [Ler Guia →](https://www.designsystems.com)
+    
+    Recursos e metodologias para construir design systems escaláveis.
+  </Card>
+</CardGrid>
+
+## 🔍 Monitoramento e Observabilidade
+
+<CardGrid>
+  <Card title="React DevTools">
+    [Usar Ferramenta →](https://react.dev/learn/react-developer-tools)
+    
+    Ferramenta essencial para debugging e análise de aplicações React.
+  </Card>
+  
+  <Card title="Sentry for React">
+    [Configurar Monitoramento →](https://docs.sentry.io/platforms/javascript/guides/react/)
+    
+    Plataforma de monitoramento de erros e performance para aplicações React.
+  </Card>
+  
+  <Card title="LogRocket">
+    [Explorar Ferramenta →](https://logrocket.com)
+    
+    Ferramenta de replay de sessões para debugging de aplicações React em produção.
+  </Card>
+</CardGrid>
+
+<Aside type="tip">
+**Dica de Arquitetura:** Comece com uma estrutura simples e evolua conforme a complexidade. Prefira composição sobre herança e mantenha componentes pequenos e focados.
+</Aside>
+
+<Aside type="note">
+**Importante:** A arquitetura deve servir ao projeto, não o contrário. Avalie sempre se a complexidade adicionada traz benefícios reais.
+</Aside>

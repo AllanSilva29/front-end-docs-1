@@ -29,6 +29,10 @@ export default defineConfig({
 					autogenerate: { directory: 'reference' },
 				},
 				{
+					label: 'Links Úteis',
+					autogenerate: { directory: 'links'}
+				},
+				{
 					label: 'Fundamentos da Web',
 					items: [
 						{
